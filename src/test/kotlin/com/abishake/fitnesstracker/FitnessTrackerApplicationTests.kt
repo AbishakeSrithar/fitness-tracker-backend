@@ -1,4 +1,4 @@
-package com.abishake.fitnesstracker.fitness_tracker
+package com.abishake.fitnesstracker
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest

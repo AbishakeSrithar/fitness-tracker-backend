@@ -1,4 +1,4 @@
-package com.abishake.fitnesstracker.fitness_tracker
+package com.abishake.fitnesstracker
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

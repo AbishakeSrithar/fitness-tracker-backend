@@ -1,16 +1,16 @@
-CREATE TABLE "Exercises" (
+CREATE TABLE "exercises" (
   "id" integer PRIMARY KEY,
   "name" varchar,
   "desc" varchar
 );
 
-CREATE TABLE "Workouts" (
+CREATE TABLE "workouts" (
   "id" integer PRIMARY KEY,
   "name" varchar,
   "created_at" timestamp
 );
 
-CREATE TABLE "Entries" (
+CREATE TABLE "entries" (
   "id" integer PRIMARY KEY,
   "workout_id" integer,
   "exercise_id" integer,
@@ -19,5 +19,5 @@ CREATE TABLE "Entries" (
   "reps" integer
 );
 
-ALTER TABLE "Entries" ADD FOREIGN KEY ("workout_id") REFERENCES "Workouts" ("id");
-ALTER TABLE "Entries" ADD FOREIGN KEY ("exercise_id") REFERENCES "Exercises" ("id");
+ALTER TABLE "entries" ADD FOREIGN KEY ("workout_id") REFERENCES "workouts" ("id");
+ALTER TABLE "entries" ADD FOREIGN KEY ("exercise_id") REFERENCES "exercises" ("id");

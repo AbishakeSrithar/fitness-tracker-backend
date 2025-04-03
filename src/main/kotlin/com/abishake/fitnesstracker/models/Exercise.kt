@@ -1,13 +1,13 @@
-package com.abishake.fitnesstracker.fitness_tracker.models
+package com.abishake.fitnesstracker.models
 
 import jakarta.persistence.*
 
 @Entity
-@Table(name = "Exercises")
+@Table(name = "exercises")
 data class Exercise(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null,
+    val id: Int = 0,
 
     val name: String,
 
