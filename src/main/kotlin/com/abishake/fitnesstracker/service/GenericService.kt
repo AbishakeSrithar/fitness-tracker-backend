@@ -10,21 +10,21 @@ import org.springframework.stereotype.Service
 
 @Service
 class GenericService(
-//    private val entryRepository: EntryRepository,
+    private val entryRepository: EntryRepository,
     private val workoutRepository: WorkoutRepository,
-//    private val exerciseRepository: ExerciseRepository,
+    private val exerciseRepository: ExerciseRepository,
 ) {
-//    fun getAllEntries(): List<Entry> {
-//        return entryRepository.findAll()
-//    }
+    fun getAllEntries(): List<Entry> {
+        return entryRepository.findAll()
+    }
 
     fun getAllWorkouts(): List<Workout> {
         return workoutRepository.findAll()
     }
 
-//    fun getAllExercises(): List<Exercise> {
-//        return exerciseRepository.findAll()
-//    }
+    fun getAllExercises(): List<Exercise> {
+        return exerciseRepository.findAll()
+    }
 }
 
 //@Service

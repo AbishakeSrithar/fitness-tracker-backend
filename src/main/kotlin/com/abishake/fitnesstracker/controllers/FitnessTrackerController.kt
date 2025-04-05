@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RestController
 class FitnessTrackerController(
     private val genericService: GenericService,
 ) {
-//    @GetMapping(
-//        value = ["/exercises"],
-//        produces = ["application/json"]
-//    )
-//    fun getExercises(): List<Exercise> {
-//        return genericService.getAllExercises()
-//    }
+    @GetMapping(
+        value = ["/exercises"],
+        produces = ["application/json"]
+    )
+    fun getExercises(): List<Exercise> {
+        return genericService.getAllExercises()
+    }
 
     @GetMapping(
         value = ["/workouts"],
@@ -29,11 +29,11 @@ class FitnessTrackerController(
         return genericService.getAllWorkouts()
     }
 
-//    @GetMapping(
-//        value = ["/entries"],
-//        produces = ["application/json"]
-//    )
-//    fun getEntries(): List<Entry> {
-//        return genericService.getAllEntries()
-//    }
+    @GetMapping(
+        value = ["/entries"],
+        produces = ["application/json"]
+    )
+    fun getEntries(): List<Entry> {
+        return genericService.getAllEntries()
+    }
 }
