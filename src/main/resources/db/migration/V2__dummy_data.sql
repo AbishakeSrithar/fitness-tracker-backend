@@ -12,6 +12,6 @@ INSERT INTO "workouts" ("id", "name", "created_at") VALUES
 
 -- Insert dummy data into Entries
 INSERT INTO "entries" ("id", "workout_id", "exercise_id", "weight", "sets", "reps") VALUES
-  (1, 1, 1, 0, 3, 15),  -- 15 push ups in 3 sets during Morning Routine
+  (1, 1, 1, 0, 4, 15),  -- 15 push ups in 3 sets during Morning Routine
   (2, 1, 2, 50, 4, 10), -- 10 squats with 50kg in 4 sets during Morning Routine
   (3, 2, 3, 0, 2, 60);  -- 60 seconds plank in 2 sets during Evening Routine
