@@ -73,6 +73,31 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+			<!-- Remove some test stuff so we can use Kotlin specific ones -->
+			<exclusions>
+				<exclusion>
+					<groupId>org.junit.vintage</groupId>
+					<artifactId>junit-vintage-engine</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.mockito</groupId>
+					<artifactId>mockito-core</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- Kotlin specific Test Dependency 1 - some reason this causes junit to not find my tests!? -->
+<!--		<dependency>-->
+<!--			<groupId>org.junit.jupiter</groupId>-->
+<!--			<artifactId>junit-jupiter-engine</artifactId>-->
+<!--			<version>5.7.2</version>-->
+<!--			<scope>test</scope>-->
+<!--		</dependency>-->
+		<!-- Kotlin specific Test Dependency 2 -->
+		<dependency>
+			<groupId>com.ninja-squad</groupId>
+			<artifactId>springmockk</artifactId>
+			<version>3.0.1</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.jetbrains.kotlin</groupId>
@@ -174,6 +199,17 @@
 						<version>3.1.0</version>
 					</dependency>
 				</dependencies>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.0.0-M5</version> <!-- Ensure you're using a JUnit 5 compatible version -->
+				<configuration>
+					<dependenciesToScan>
+						<dependency>org.junit.jupiter:junit-jupiter-api</dependency>
+						<dependency>org.junit.jupiter:junit-jupiter-engine</dependency>
+					</dependenciesToScan>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

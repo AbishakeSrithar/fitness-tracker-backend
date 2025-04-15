@@ -27,6 +27,8 @@ then run
     mvn test
 ```
 
+Kotlin Tests: https://www.baeldung.com/kotlin/spring-boot-testing
+
 
 ## Resources
 Test Containers: https://jskim1991.medium.com/spring-boot-configure-testcontainers-in-your-test-code-this-way-417b221e55b
