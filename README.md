@@ -12,6 +12,24 @@ Runs our Docker container with the db and app images (created using existing ```
 ``` shell
     docker compose up --build --force-recreate --remove-orphans
 ```
+While Docker DB is running, you can access it via shell
+``` shell
+    docker exec -it postgresql psql -U postgres
+```
+
+## Test
+To run the tests, make sure you run the db in docker first
+``` shell
+    docker compose up db --build
+```
+then run
+``` shell
+    mvn test
+```
+
+
+## Resources
+Test Containers: https://jskim1991.medium.com/spring-boot-configure-testcontainers-in-your-test-code-this-way-417b221e55b
 
 ## Database Design
 ![database_design.png](database_design.png)

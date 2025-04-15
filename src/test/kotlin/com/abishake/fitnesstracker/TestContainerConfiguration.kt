@@ -10,8 +10,14 @@ import org.testcontainers.containers.PostgreSQLContainer
 class TestContainerConfiguration {
 
     @Bean
-    @ServiceConnection
     fun postgreSQLContainer(): PostgreSQLContainer<*> {
-        return PostgreSQLContainer("postgres:15")
+        val postgres = PostgreSQLContainer<Nothing>("postgres:17")
+            .apply {
+                withDatabaseName("test_db")
+                withUsername("test_user")
+                withPassword("test_password")
+            }
+        postgres.start() // Start the container
+        return postgres
     }
 }
