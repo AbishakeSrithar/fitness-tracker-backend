@@ -29,9 +29,43 @@ then run
 
 Kotlin Tests: https://www.baeldung.com/kotlin/spring-boot-testing
 
+## Database Design
+![database_design.png](database_design.png)
+
+## Endpoints for MVP
+### Create
+- [ ] Add new Entry
+- [ ] Add new Workout
+- [ ] Add new Exercise
+### Read
+- [ ] Get Entries
+  - [x] All
+  - [ ] byId
+  - [ ] byWorkoutId
+  - [ ] byExerciseId
+- [ ] Get Workouts
+    - [x] All
+    - [ ] byId
+    - [ ] byName
+    - [ ] byCreatedAt
+- [ ] Get Exercises
+    - [x] All
+    - [ ] byId
+    - [ ] byName
+### Update
+- [ ] Edit Entries
+  - [ ] Weight
+  - [ ] Sets
+  - [ ] Reps
+- [ ] Edit Workouts Name
+- [ ] Edit Exercises
+  - [ ] byName
+  - [ ] byDesc
+## Delete
+- [ ] Delete Entry
+- [ ] Delete Workout
+- [ ] Delete Exercise
 
 ## Resources
 Test Containers: https://jskim1991.medium.com/spring-boot-configure-testcontainers-in-your-test-code-this-way-417b221e55b
-
-## Database Design
-![database_design.png](database_design.png)
+LocalDate REST Params: https://www.baeldung.com/spring-date-parameters

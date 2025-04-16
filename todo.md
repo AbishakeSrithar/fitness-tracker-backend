@@ -6,6 +6,7 @@
   - [x] Intellij is good, Vscode needs ++ (maybe leave and check with new video settings first (that worked))
 - [ ] Check if Audio of me + music is okay
   - [ ] Too quiet, have upped the gain on Mic
+  - [ ] Max gain!! 
 - [x] Video makes text weird, downscaling issue? works on 4k 16:9 monitor so not downscaling issue, just ultrawide?
   - [x] Switched widescreen to lower res + grid to 4x4 
 
@@ -17,10 +18,17 @@
 - [x] Check if tests work (they probably don't)
 - [x] Get context load tests dockerised and working
   - [x] Figure out why it not works, what are those annotations doing??
-- [ ] Add more tests
-  - [ ] Service Tests
-  - [ ] Controller Tests
-    - [ ] Entries remaining
-  - [ ] Repository/Models test? Necessary? Use README Baeldung link
+- [x] Rename/Refactor functions and filenames
+- [x] Add more tests
+  - [x] Service Tests
+  - [x] Controller Tests
+    - [x] Entries remaining
   - [ ] Data for more exercises as part of init (not for tests, for normal)
   - [ ] Plan what's next, what other endpoints do we need and how to do them
+  - [ ] Add CRUD endpoints+repocalls (check ReadMe for full list)
+
+## Questions for later
+- [ ] Figure out why intellij theme keeps resetting
+- [ ] The contextLoads test requires the docker db to be up (why aren't my test containers up like for the other tests)
+- [ ] Repository/Models test? Necessary? Use README Baeldung link
+- [ ] Semi colons at end? Linter for Kotlin?

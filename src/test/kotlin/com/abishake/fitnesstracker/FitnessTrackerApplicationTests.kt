@@ -1,6 +1,8 @@
 package com.abishake.fitnesstracker
 
-import com.abishake.fitnesstracker.controllers.FitnessTrackerController
+import com.abishake.fitnesstracker.controllers.MainController
+import com.abishake.fitnesstracker.repositories.EntryRepository
+import com.abishake.fitnesstracker.service.MainService
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -14,12 +16,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 @Import(TestContainerConfiguration::class)
 class FitnessTrackerApplicationTests {
 
-	@Autowired
-	lateinit var fitnessTrackerController: FitnessTrackerController
-
 	@Test
-	fun contextLoads() {
-		assertThat(fitnessTrackerController).isNotNull()
-	}
+	fun contextLoads() {}
 
 }
