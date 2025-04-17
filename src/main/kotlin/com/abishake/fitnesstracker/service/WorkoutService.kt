@@ -1,27 +1,16 @@
 package com.abishake.fitnesstracker.service
 
-import com.abishake.fitnesstracker.models.Entry
-import com.abishake.fitnesstracker.models.Exercise
 import com.abishake.fitnesstracker.models.Workout
-import com.abishake.fitnesstracker.repositories.EntryRepository
-import com.abishake.fitnesstracker.repositories.ExerciseRepository
 import com.abishake.fitnesstracker.repositories.WorkoutRepository
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.util.*
 
 @Service
-class MainService(
-    private val entryRepository: EntryRepository,
-    private val workoutRepository: WorkoutRepository,
-    private val exerciseRepository: ExerciseRepository,
+class WorkoutService(
+    private val workoutRepository: WorkoutRepository
 ) {
-    // Read Entries
-    fun getAllEntries(): List<Entry> {
-        return entryRepository.findAll()
-    }
-
-    // Read Workouts
+    // READ
     fun getAllWorkouts(): List<Workout> {
         return workoutRepository.findAll()
     }
@@ -36,10 +25,5 @@ class MainService(
 
     fun getWorkoutByDate(localDate: LocalDate): List<Workout> {
         return workoutRepository.findByCreatedAt(localDate)
-    }
-
-    // Read Exercises
-    fun getAllExercises(): List<Exercise> {
-        return exerciseRepository.findAll()
     }
 }

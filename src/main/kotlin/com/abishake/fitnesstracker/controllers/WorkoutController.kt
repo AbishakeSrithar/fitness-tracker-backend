@@ -1,9 +1,7 @@
 package com.abishake.fitnesstracker.controllers
 
-import com.abishake.fitnesstracker.models.Entry
-import com.abishake.fitnesstracker.models.Exercise
 import com.abishake.fitnesstracker.models.Workout
-import com.abishake.fitnesstracker.service.MainService
+import com.abishake.fitnesstracker.service.WorkoutService
 import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -13,57 +11,42 @@ import java.time.LocalDate
 import java.util.*
 
 @RestController
-@RequestMapping("/api")
-class MainController(
-    private val mainService: MainService,
+@RequestMapping("/api/workout")
+class WorkoutController(
+    private val workoutService: WorkoutService,
 ) {
+    // READ
     @GetMapping(
-        value = ["/getAllExercises"],
-        produces = ["application/json"]
-    )
-    fun getAllExercises(): List<Exercise> {
-        return mainService.getAllExercises()
-    }
-
-    @GetMapping(
-        value = ["/getAllWorkouts"],
+        value = ["/all"],
         produces = ["application/json"]
     )
     fun getAllWorkouts(): List<Workout> {
-        return mainService.getAllWorkouts()
+        return workoutService.getAllWorkouts()
     }
 
     @GetMapping(
-        value = ["/getWorkoutById"],
+        value = ["/id"],
         produces = ["application/json"]
     )
     fun getWorkoutById(@RequestParam("id") id: Int): Optional<Workout> {
-        return mainService.getWorkoutById(id)
+        return workoutService.getWorkoutById(id)
     }
 
     @GetMapping(
-        value = ["/getWorkoutByName"],
+        value = ["/name"],
         produces = ["application/json"]
     )
     fun getWorkoutByName(@RequestParam("name") name: String): List<Workout> {
-        return mainService.getWorkoutByName(name)
+        return workoutService.getWorkoutByName(name)
     }
 
     @GetMapping(
-        value = ["/getWorkoutByDate"],
+        value = ["/date"],
         produces = ["application/json"]
     )
     fun getWorkoutByDate(@RequestParam("localDate")
                          @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) localDate: LocalDate
     ): List<Workout> {
-        return mainService.getWorkoutByDate(localDate)
-    }
-
-    @GetMapping(
-        value = ["/getAllEntries"],
-        produces = ["application/json"]
-    )
-    fun getAllEntries(): List<Entry> {
-        return mainService.getAllEntries()
+        return workoutService.getWorkoutByDate(localDate)
     }
 }

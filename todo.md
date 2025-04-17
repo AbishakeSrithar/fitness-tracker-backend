@@ -23,6 +23,7 @@
   - [x] Service Tests
   - [x] Controller Tests
     - [x] Entries remaining
+  - [ ] NO AI
   - [ ] Data for more exercises as part of init (not for tests, for normal)
   - [ ] Plan what's next, what other endpoints do we need and how to do them
   - [ ] Add CRUD endpoints+repocalls (check ReadMe for full list)
@@ -32,3 +33,7 @@
 - [ ] The contextLoads test requires the docker db to be up (why aren't my test containers up like for the other tests)
 - [ ] Repository/Models test? Necessary? Use README Baeldung link
 - [ ] Semi colons at end? Linter for Kotlin?
+- [ ] Auto clean up imports?
+
+## What we've learnt
+- [ ] @WebMvcTest is a lightweight only get the controller beans, whereas @SpringBootTest launches all the beans? @WebMvcTest(WorkoutController::class) will work just for specified Controller without needing all controllers mocked (the case with no args): https://docs.spring.io/spring-boot/reference/testing/spring-boot-applications.html#testing.spring-boot-applications
