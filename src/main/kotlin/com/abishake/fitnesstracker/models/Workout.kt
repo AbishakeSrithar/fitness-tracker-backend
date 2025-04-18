@@ -8,7 +8,7 @@ import java.time.LocalDateTime
 data class Workout(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Int = 0,
+    val id: Int,
 
     val name: String,
 

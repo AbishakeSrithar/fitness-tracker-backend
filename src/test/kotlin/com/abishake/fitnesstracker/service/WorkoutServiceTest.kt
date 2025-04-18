@@ -15,7 +15,7 @@ class WorkoutServiceTest {
     private val workoutService = WorkoutService(workoutsRepository)
 
     @Test
-    fun getAllWorkoutsTest() {
+    fun getAllWorkoutsServiceTest() {
         //setup
         val workouts = listOf(
             Workout(id = 1, name = "Push Day", createdAt = LocalDateTime.of(2025, 4, 14, 13, 0, 0, 0)),
@@ -34,7 +34,7 @@ class WorkoutServiceTest {
     }
 
     @Test
-    fun getWorkoutByIdTest() {
+    fun getWorkoutByIdServiceTest() {
         //setup
         val workout = Optional.of(Workout(id = 2, name = "Pull Day", createdAt = LocalDateTime.of(2025, 4, 15, 13, 0, 0, 0)))
 
@@ -49,7 +49,7 @@ class WorkoutServiceTest {
     }
 
     @Test
-    fun getWorkoutByNameTest() {
+    fun getWorkoutByNameServiceTest() {
         //setup
         val workout_1 = Workout(id = 2, name = "Pull Day", createdAt = LocalDateTime.of(2025, 4, 15, 13, 0, 0, 0))
         val workout_2 = Workout(id = 7, name = "Pull Day", createdAt = LocalDateTime.of(2025, 4, 22, 13, 30, 0, 0))
@@ -65,7 +65,7 @@ class WorkoutServiceTest {
     }
 
     @Test
-    fun getWorkoutByDateTest() {
+    fun getWorkoutByDateServiceTest() {
         //setup
         val workout_2 = Workout(id = 7, name = "Pull Day", createdAt = LocalDateTime.of(2025, 4, 22, 13, 30, 0, 0))
 

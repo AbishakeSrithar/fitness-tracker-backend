@@ -7,8 +7,10 @@
 - [ ] Check if Audio of me + music is okay
   - [ ] Too quiet, have upped the gain on Mic
   - [ ] Max gain!! 
+  - [ ] 0.75 gain
 - [x] Video makes text weird, downscaling issue? works on 4k 16:9 monitor so not downscaling issue, just ultrawide?
   - [x] Switched widescreen to lower res + grid to 4x4 
+  - [ ] Lower FPS/Bitrate?
 
 ## Fitness Tracker App
 - [x] Add a theme to my intellij
@@ -23,10 +25,11 @@
   - [x] Service Tests
   - [x] Controller Tests
     - [x] Entries remaining
-  - [ ] NO AI
   - [ ] Data for more exercises as part of init (not for tests, for normal)
-  - [ ] Plan what's next, what other endpoints do we need and how to do them
+  - [x] Plan what's next, what other endpoints do we need and how to do them
+  - [ ] Figure out why mvn clean install requires postgres db to be up? Verify 1st
   - [ ] Add CRUD endpoints+repocalls (check ReadMe for full list)
+  - [ ] CLEAN UP NOW ALL READ IS DOWN!!! Then start CREATE
 
 ## Questions for later
 - [ ] Figure out why intellij theme keeps resetting

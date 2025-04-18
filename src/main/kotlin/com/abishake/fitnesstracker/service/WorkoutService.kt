@@ -23,7 +23,7 @@ class WorkoutService(
         return workoutRepository.findByName(name)
     }
 
-    fun getWorkoutByDate(localDate: LocalDate): List<Workout> {
-        return workoutRepository.findByCreatedAt(localDate)
+    fun getWorkoutByDate(date: LocalDate): List<Workout> {
+        return workoutRepository.findByCreatedAt(date)
     }
 }

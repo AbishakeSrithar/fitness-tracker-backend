@@ -9,6 +9,7 @@ import io.mockk.mockk
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.assertEquals
 import java.time.LocalDateTime
+import java.util.*
 
 class EntryServiceTest {
     private val entryRepository: EntryRepository = mockk()
@@ -17,18 +18,64 @@ class EntryServiceTest {
     @Test
     fun getAllEntriesTest() {
         //setup
-        val workout_full_body = Workout(id = 1, name = "Full Body Day", createdAt = LocalDateTime.of(2025, 4, 15, 13, 0, 0, 0))
-        val exercise_squat = Exercise(id = 1, name = "Squat", description = "A lower body exercise targeting the quads, glutes, and hamstrings.")
-        val exercise_bench = Exercise(id = 2, name = "Bench Press", description = "A chest exercise that targets the pectorals, shoulders, and triceps.")
         val entries = listOf(
-            Entry(workout = workout_full_body, exercise = exercise_squat, weight = 60.0, sets = 3, reps = 10),
-            Entry(workout = workout_full_body, exercise = exercise_bench, weight = 60.0, sets = 4, reps = 8)
+            Entry(id = 1, workoutId = 1, exerciseId = 1, weight = 60.0, sets = 3, reps = 10),
+            Entry(id = 2, workoutId = 1, exerciseId = 2, weight = 60.0, sets = 4, reps = 8)
         )
         //given
         every { entryRepository.findAll() } returns entries;
 
         //when
         val result = entryService.getAllEntries();
+
+        //then
+        assertEquals(entries, result)
+    }
+
+    @Test
+    fun getEntryByIdServiceTest() {
+        //setup
+        val entry = Optional.of(Entry(id = 2, workoutId = 1, exerciseId = 2, weight = 60.0, sets = 4, reps = 8))
+
+        //given
+        every { entryRepository.findById(2) } returns entry;
+
+        //when
+        val result = entryService.getEntryById(2);
+
+        //then
+        assertEquals(entry, result)
+    }
+
+    @Test
+    fun getEntriesByWorkoutIdServiceTest() {
+        //setup
+        val entries = listOf(
+            Entry(id = 1, workoutId = 1, exerciseId = 1, weight = 60.0, sets = 3, reps = 10),
+            Entry(id = 2, workoutId = 1, exerciseId = 2, weight = 60.0, sets = 4, reps = 8)
+        )
+        //given
+        every { entryRepository.findByWorkoutId(1) } returns entries;
+
+        //when
+        val result = entryService.getEntriesByWorkoutId(1);
+
+        //then
+        assertEquals(entries, result)
+    }
+
+    @Test
+    fun getEntriesByExerciseIdServiceTest() {
+        //setup
+        val entries = listOf(
+            Entry(id = 1, workoutId = 1, exerciseId = 2, weight = 60.0, sets = 3, reps = 10),
+            Entry(id = 2, workoutId = 2, exerciseId = 2, weight = 60.0, sets = 4, reps = 8)
+        )
+        //given
+        every { entryRepository.findByExerciseId(2) } returns entries;
+
+        //when
+        val result = entryService.getEntriesByExerciseId(2);
 
         //then
         assertEquals(entries, result)

@@ -38,20 +38,20 @@ Kotlin Tests: https://www.baeldung.com/kotlin/spring-boot-testing
 - [ ] Add new Workout
 - [ ] Add new Exercise
 ### Read
-- [ ] Get Entries
+- [x] Get Entries
   - [x] All
-  - [ ] byId
-  - [ ] byWorkoutId
-  - [ ] byExerciseId
-- [ ] Get Workouts
+  - [x] byId
+  - [x] byWorkoutId
+  - [x] byExerciseId
+- [x] Get Workouts
     - [x] All
-    - [ ] byId
-    - [ ] byName
-    - [ ] byCreatedAt
-- [ ] Get Exercises
+    - [x] byId
+    - [x] byName
+    - [x] byCreatedAt
+- [x] Get Exercises
     - [x] All
-    - [ ] byId
-    - [ ] byName
+    - [x] byId
+    - [x] byName
 ### Update
 - [ ] Edit Entries
   - [ ] Weight

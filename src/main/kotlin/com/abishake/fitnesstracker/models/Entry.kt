@@ -7,15 +7,15 @@ import jakarta.persistence.*
 data class Entry(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Int = 0,
+    val id: Int,
 
     @ManyToOne
-    @JoinColumn(name = "workout_id", nullable = false)
-    val workout: Workout,
+    @JoinColumn(nullable = false)
+    val workoutId: Int,
 
     @ManyToOne
-    @JoinColumn(name = "exercise_id", nullable = false)
-    val exercise: Exercise,
+    @JoinColumn(nullable = false)
+    val exerciseId: Int,
 
     val weight: Double,
     val sets: Int,

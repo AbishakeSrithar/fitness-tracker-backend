@@ -44,9 +44,9 @@ class WorkoutController(
         value = ["/date"],
         produces = ["application/json"]
     )
-    fun getWorkoutByDate(@RequestParam("localDate")
-                         @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) localDate: LocalDate
+    fun getWorkoutByDate(@RequestParam("date")
+                         @DateTimeFormat(pattern = "dd/MM/yyyy") date: LocalDate
     ): List<Workout> {
-        return workoutService.getWorkoutByDate(localDate)
+        return workoutService.getWorkoutByDate(date)
     }
 }

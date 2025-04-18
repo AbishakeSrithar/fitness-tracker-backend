@@ -6,6 +6,7 @@ import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.assertEquals
+import java.util.*
 
 class ExerciseServiceTest {
     private val exerciseRepository: ExerciseRepository = mockk()
@@ -26,5 +27,35 @@ class ExerciseServiceTest {
 
         //then
         assertEquals(exercises, result)
+    }
+
+    @Test
+    fun getExerciseByIdServiceTest() {
+        //setup
+        val exercise = Optional.of(Exercise(id = 2, name = "Squat", description = "A lower body exercise targeting the quads, glutes, and hamstrings."))
+
+        //given
+        every { exerciseRepository.findById(2) } returns exercise;
+
+        //when
+        val result = exerciseService.getExerciseById(2);
+
+        //then
+        assertEquals(exercise, result)
+    }
+
+    @Test
+    fun getExerciseByNameServiceTest() {
+        //setup
+        val exercise = Optional.of(Exercise(id = 1, name = "Squat", description = "A lower body exercise targeting the quads, glutes, and hamstrings."))
+
+        //given
+        every { exerciseRepository.findByName("Squat") } returns exercise;
+
+        //when
+        val result = exerciseService.getExerciseByName("Squat");
+
+        //then
+        assertEquals(exercise, result)
     }
 }
