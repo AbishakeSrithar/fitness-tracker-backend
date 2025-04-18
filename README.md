@@ -9,7 +9,7 @@ Compiles our code into .jar file in ```./target```
     mvn clean install
 ```
 Runs our Docker container with the db and app images (created using existing ```.jar```)
-``` shell
+``` shelldocker 
     docker compose up --build --force-recreate --remove-orphans
 ```
 While Docker DB is running, you can access it via shell
