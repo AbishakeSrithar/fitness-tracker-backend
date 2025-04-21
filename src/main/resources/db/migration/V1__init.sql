@@ -1,17 +1,17 @@
 CREATE TABLE "exercises" (
-  "id" integer PRIMARY KEY,
+  "id" serial PRIMARY KEY,
   "name" varchar,
   "desc" varchar
 );
 
 CREATE TABLE "workouts" (
-  "id" integer PRIMARY KEY,
+  "id" serial PRIMARY KEY,
   "name" varchar,
   "created_at" timestamp
 );
 
 CREATE TABLE "entries" (
-  "id" integer PRIMARY KEY,
+  "id" serial PRIMARY KEY,
   "workout_id" integer,
   "exercise_id" integer,
   "weight" decimal,

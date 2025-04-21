@@ -3,6 +3,7 @@ package com.abishake.fitnesstracker.controllers
 import com.abishake.fitnesstracker.models.Entry
 import com.abishake.fitnesstracker.service.EntryService
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
@@ -13,9 +14,24 @@ import java.util.*
 class EntryController(
     private val entryService: EntryService,
 ) {
+    // CREATE
+    @PostMapping(
+        value = ["/create"],
+        produces = ["application/json"]
+    )
+    fun createEntry(
+        @RequestParam("workoutId") workoutId: Int,
+        @RequestParam("exerciseId") exerciseId: Int,
+        @RequestParam("weight") weight: Double,
+        @RequestParam("sets") sets: Int,
+        @RequestParam("reps") reps: Int
+    ): Entry {
+        return entryService.createEntry(workoutId, exerciseId, weight, sets, reps)
+    }
+
     // READ
     @GetMapping(
-        value = ["/all"],
+        value = ["/get"],
         produces = ["application/json"]
     )
     fun getAllEntries(): List<Entry> {
@@ -23,7 +39,7 @@ class EntryController(
     }
 
     @GetMapping(
-        value = ["/id"],
+        value = ["/get/byId"],
         produces = ["application/json"]
     )
     fun getEntryById(@RequestParam("id") id: Int): Optional<Entry> {
@@ -31,7 +47,7 @@ class EntryController(
     }
 
     @GetMapping(
-        value = ["/workoutId"],
+        value = ["/get/byWorkoutId"],
         produces = ["application/json"]
     )
     fun getEntryByWorkoutId(@RequestParam("workoutId") workoutId: Int): List<Entry> {
@@ -39,7 +55,7 @@ class EntryController(
     }
 
     @GetMapping(
-        value = ["/exerciseId"],
+        value = ["/get/byExerciseId"],
         produces = ["application/json"]
     )
     fun getEntryByExerciseId(@RequestParam("exerciseId") exerciseId: Int): List<Entry> {

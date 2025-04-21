@@ -7,7 +7,7 @@ import jakarta.persistence.*
 data class Entry(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Int,
+    val id: Long? = null,
 
     val workoutId: Int,
 

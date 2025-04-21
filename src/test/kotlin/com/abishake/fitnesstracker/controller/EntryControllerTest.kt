@@ -35,7 +35,7 @@ class EntryControllerTest(
 
         every { entryService.getAllEntries() } returns entries
 
-        mockMvc.perform(get("/api/entry/all"))
+        mockMvc.perform(get("/api/entry/get"))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(
@@ -54,7 +54,7 @@ class EntryControllerTest(
 
         every { entryService.getEntryById(1) } returns entry
 
-        mockMvc.perform(get("/api/entry/id?id=1"))
+        mockMvc.perform(get("/api/entry/get/byId?id=1"))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(
@@ -75,7 +75,7 @@ class EntryControllerTest(
 
         every { entryService.getEntriesByWorkoutId(1) } returns entries
 
-        mockMvc.perform(get("/api/entry/workoutId?workoutId=1"))
+        mockMvc.perform(get("/api/entry/get/byWorkoutId?workoutId=1"))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(
@@ -97,7 +97,7 @@ class EntryControllerTest(
 
         every { entryService.getEntriesByExerciseId(1) } returns entries
 
-        mockMvc.perform(get("/api/entry/exerciseId?exerciseId=1"))
+        mockMvc.perform(get("/api/entry/get/byExerciseId?exerciseId=1"))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(

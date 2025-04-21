@@ -9,6 +9,13 @@ import java.util.Optional
 class EntryService(
     private val entryRepository: EntryRepository
 ) {
+    // CREATE
+    fun createEntry(workoutId: Int, exerciseId: Int, weight: Double, sets: Int, reps: Int): Entry {
+        return entryRepository.save(
+            Entry(null, workoutId, exerciseId, weight, sets, reps)
+        )
+    }
+
     // READ
     fun getAllEntries(): List<Entry> {
         return entryRepository.findAll()
