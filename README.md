@@ -33,38 +33,7 @@ Kotlin Tests: https://www.baeldung.com/kotlin/spring-boot-testing
 ![database_design.png](database_design.png)
 
 ## Endpoints for MVP
-### Create
-- [ ] Add new Entry
-- [ ] Add new Workout
-- [ ] Add new Exercise
-### Read
-- [x] Get Entries
-  - [x] All
-  - [x] byId
-  - [x] byWorkoutId
-  - [x] byExerciseId
-- [x] Get Workouts
-    - [x] All
-    - [x] byId
-    - [x] byName
-    - [x] byCreatedAt
-- [x] Get Exercises
-    - [x] All
-    - [x] byId
-    - [x] byName
-### Update
-- [ ] Edit Entries
-  - [ ] Weight
-  - [ ] Sets
-  - [ ] Reps
-- [ ] Edit Workouts Name
-- [ ] Edit Exercises
-  - [ ] byName
-  - [ ] byDesc
-## Delete
-- [ ] Delete Entry
-- [ ] Delete Workout
-- [ ] Delete Exercise
+TODO
 
 ## Resources
 Test Containers: https://jskim1991.medium.com/spring-boot-configure-testcontainers-in-your-test-code-this-way-417b221e55b
