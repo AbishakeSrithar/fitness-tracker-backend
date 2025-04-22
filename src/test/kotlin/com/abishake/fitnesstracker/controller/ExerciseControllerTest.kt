@@ -12,8 +12,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
-import java.time.LocalDateTime
 import java.util.*
 
 @WebMvcTest(ExerciseController::class)
@@ -23,7 +23,26 @@ class ExerciseControllerTest(
 
     @MockkBean
     lateinit var exerciseService: ExerciseService
+    // CREATE
+    @Test
+    fun createExerciseControllerTest() {
+        val exercise = Exercise(1, name = "Deadlift", description = "Die by lifting")
 
+        every { exerciseService.createExercise("Deadlift", "Die by lifting") } returns exercise
+
+        mockMvc.perform(post("/api/exercise/create?name=Deadlift&description=Die by lifting"))
+            .andExpect(status().isOk)
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(
+                content().json(
+                    """
+                {"id":1, "name": "Deadlift", "description": "Die by lifting"}
+                """
+                )
+            )
+    }
+
+    // READ
     @Test
     fun getAllExercisesControllerTest() {
         val exercises = listOf(
@@ -41,7 +60,7 @@ class ExerciseControllerTest(
 
         every { exerciseService.getAllExercises() } returns exercises
 
-        mockMvc.perform(get("/api/exercise/all"))
+        mockMvc.perform(get("/api/exercise/get"))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(

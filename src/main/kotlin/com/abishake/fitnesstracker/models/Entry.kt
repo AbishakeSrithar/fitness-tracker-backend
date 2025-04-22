@@ -8,14 +8,9 @@ data class Entry(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
-
     val workoutId: Int,
-
     val exerciseId: Int,
-
     val weight: Double,
-
     val sets: Int,
-
     val reps: Int
 )

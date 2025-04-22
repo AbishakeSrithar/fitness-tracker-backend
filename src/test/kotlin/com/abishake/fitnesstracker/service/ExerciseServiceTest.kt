@@ -13,6 +13,21 @@ class ExerciseServiceTest {
     private val exerciseService = ExerciseService(exerciseRepository)
 
     @Test
+    fun createExerciseTest() {
+        //setup
+        val exercisePreSave = Exercise(id = null, name = "Squat", description = "A lower body exercise targeting the quads, glutes, and hamstrings.")
+        val exercisePostSave = Exercise(id = 1, name = "Squat", description = "A lower body exercise targeting the quads, glutes, and hamstrings.")
+        //given
+        every { exerciseRepository.save(exercisePreSave) } returns exercisePostSave;
+
+        //when
+        val result = exerciseService.createExercise("Squat", "A lower body exercise targeting the quads, glutes, and hamstrings.");
+
+        //then
+        assertEquals(exercisePostSave, result)
+    }
+
+    @Test
     fun getAllExercisesTest() {
         //setup
         val exercises = listOf(

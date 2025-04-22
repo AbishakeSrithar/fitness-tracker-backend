@@ -1,5 +1,5 @@
 -- Insert dummy data into Exercises
-INSERT INTO "exercises" ("name", "desc") VALUES
+INSERT INTO "exercises" ("name", "description") VALUES
   ('Push Up', 'An upper-body exercise for chest and triceps'),
   ('Squat', 'A lower-body exercise for quads and glutes'),
   ('Plank', 'A core stability exercise');

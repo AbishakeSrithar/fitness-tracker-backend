@@ -1,6 +1,7 @@
 package com.abishake.fitnesstracker.models
 
 import jakarta.persistence.*
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 @Entity
@@ -8,10 +9,8 @@ import java.time.LocalDateTime
 data class Workout(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Int,
-
+    val id: Long? = null,
     val name: String,
-
     @Column(name = "created_at")
-    val createdAt: LocalDateTime
+    val createdAt: LocalDate = LocalDate.now()
 )

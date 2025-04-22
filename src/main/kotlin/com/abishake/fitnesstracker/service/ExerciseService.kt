@@ -1,5 +1,6 @@
 package com.abishake.fitnesstracker.service
 
+import com.abishake.fitnesstracker.models.Entry
 import com.abishake.fitnesstracker.models.Exercise
 import com.abishake.fitnesstracker.repositories.ExerciseRepository
 import org.springframework.stereotype.Service
@@ -9,6 +10,13 @@ import java.util.*
 class ExerciseService(
     private val exerciseRepository: ExerciseRepository
 ) {
+    // CREATE
+    fun createExercise(name: String, description: String): Exercise {
+        return exerciseRepository.save(
+            Exercise(null, name, description)
+        )
+    }
+
     // READ
     fun getAllExercises(): List<Exercise> {
         return exerciseRepository.findAll()

@@ -1,12 +1,10 @@
 package com.abishake.fitnesstracker.controllers
 
+import com.abishake.fitnesstracker.models.Exercise
 import com.abishake.fitnesstracker.models.Workout
 import com.abishake.fitnesstracker.service.WorkoutService
 import org.springframework.format.annotation.DateTimeFormat
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.time.LocalDate
 import java.util.*
 
@@ -15,9 +13,27 @@ import java.util.*
 class WorkoutController(
     private val workoutService: WorkoutService,
 ) {
+    // CREATE
+    @PostMapping(
+        value = ["/create"],
+        produces = ["application/json"]
+    )
+    fun createWorkout(
+        @RequestParam("name") name: String,
+        @RequestParam("date", required = false) @DateTimeFormat(pattern = "dd/MM/yyyy") date: Optional<LocalDate>
+    ): Workout {
+        return if (date.isPresent) {
+            workoutService.createWorkout(name, date.get())
+        } else {
+            workoutService.createWorkout(name)
+        }
+
+    }
+
+
     // READ
     @GetMapping(
-        value = ["/all"],
+        value = ["/get"],
         produces = ["application/json"]
     )
     fun getAllWorkouts(): List<Workout> {

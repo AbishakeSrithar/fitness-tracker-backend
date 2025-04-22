@@ -9,8 +9,5 @@ import java.time.LocalDateTime
 @Repository
 interface WorkoutRepository : JpaRepository<Workout, Int> {
     fun findByName(name: String): List<Workout>
-    fun findByCreatedAt(date: LocalDate): List<Workout> {
-        return findAllByCreatedAtBetween(date.atStartOfDay(), date.plusDays(1).atStartOfDay())
-    }
-    fun findAllByCreatedAtBetween(from: LocalDateTime, to: LocalDateTime): List<Workout>
+    fun findByCreatedAt(date: LocalDate): List<Workout>
 }

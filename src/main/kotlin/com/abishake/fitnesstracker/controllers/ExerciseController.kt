@@ -1,12 +1,10 @@
 package com.abishake.fitnesstracker.controllers
 
+import com.abishake.fitnesstracker.models.Entry
 import com.abishake.fitnesstracker.models.Exercise
 import com.abishake.fitnesstracker.models.Workout
 import com.abishake.fitnesstracker.service.ExerciseService
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.util.*
 
 @RestController
@@ -14,9 +12,21 @@ import java.util.*
 class ExerciseController(
     private val exerciseService: ExerciseService
 ) {
+    // CREATE
+    @PostMapping(
+        value = ["/create"],
+        produces = ["application/json"]
+    )
+    fun createEntry(
+        @RequestParam("name") name: String,
+        @RequestParam("description") description: String
+    ): Exercise {
+        return exerciseService.createExercise(name, description)
+    }
+
     // READ
     @GetMapping(
-        value = ["/all"],
+        value = ["/get"],
         produces = ["application/json"]
     )
     fun getAllExercises(): List<Exercise> {

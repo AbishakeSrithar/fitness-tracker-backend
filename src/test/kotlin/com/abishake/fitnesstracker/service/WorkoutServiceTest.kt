@@ -4,23 +4,39 @@ import com.abishake.fitnesstracker.models.Workout
 import com.abishake.fitnesstracker.repositories.WorkoutRepository
 import io.mockk.every
 import io.mockk.mockk
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.util.*
+
 
 class WorkoutServiceTest {
     private val workoutsRepository: WorkoutRepository = mockk()
     private val workoutService = WorkoutService(workoutsRepository)
 
     @Test
+    fun createWorkoutTest() {
+        //setup
+        val date = LocalDate.of(2025, 4, 14)
+        val workoutPreSave = Workout(id = null, name = "Pull Day", createdAt = date)
+        val workoutPostSave = Workout(id = 2, name = "Pull Day", createdAt = date)
+        //given
+        every { workoutsRepository.save(workoutPreSave) } returns workoutPostSave;
+
+        //when
+        val result = workoutService.createWorkout("Pull Day", date);
+
+        //then
+        assertEquals(workoutPostSave, result)
+    }
+
+    @Test
     fun getAllWorkoutsServiceTest() {
         //setup
         val workouts = listOf(
-            Workout(id = 1, name = "Push Day", createdAt = LocalDateTime.of(2025, 4, 14, 13, 0, 0, 0)),
-            Workout(id = 2, name = "Pull Day", createdAt = LocalDateTime.of(2025, 4, 15, 13, 0, 0, 0)),
-            Workout(id = 3, name = "Leg Day", createdAt = LocalDateTime.of(2025, 4, 16, 13, 0, 0, 0))
+            Workout(id = 1, name = "Push Day", createdAt = LocalDate.of(2025, 4, 14)),
+            Workout(id = 2, name = "Pull Day", createdAt = LocalDate.of(2025, 4, 15)),
+            Workout(id = 3, name = "Leg Day", createdAt = LocalDate.of(2025, 4, 16))
         )
 
         //given
@@ -36,7 +52,7 @@ class WorkoutServiceTest {
     @Test
     fun getWorkoutByIdServiceTest() {
         //setup
-        val workout = Optional.of(Workout(id = 2, name = "Pull Day", createdAt = LocalDateTime.of(2025, 4, 15, 13, 0, 0, 0)))
+        val workout = Optional.of(Workout(id = 2, name = "Pull Day", createdAt = LocalDate.of(2025, 4, 14)))
 
         //given
         every { workoutsRepository.findById(2) } returns workout;
@@ -51,8 +67,8 @@ class WorkoutServiceTest {
     @Test
     fun getWorkoutByNameServiceTest() {
         //setup
-        val workout_1 = Workout(id = 2, name = "Pull Day", createdAt = LocalDateTime.of(2025, 4, 15, 13, 0, 0, 0))
-        val workout_2 = Workout(id = 7, name = "Pull Day", createdAt = LocalDateTime.of(2025, 4, 22, 13, 30, 0, 0))
+        val workout_1 = Workout(id = 2, name = "Pull Day", createdAt = LocalDate.of(2025, 4, 14))
+        val workout_2 = Workout(id = 7, name = "Pull Day", createdAt = LocalDate.of(2025, 4, 22))
 
         //given
         every { workoutsRepository.findByName("Pull Day") } returns arrayListOf(workout_1, workout_2);
@@ -67,7 +83,7 @@ class WorkoutServiceTest {
     @Test
     fun getWorkoutByDateServiceTest() {
         //setup
-        val workout_2 = Workout(id = 7, name = "Pull Day", createdAt = LocalDateTime.of(2025, 4, 22, 13, 30, 0, 0))
+        val workout_2 = Workout(id = 7, name = "Pull Day", createdAt = LocalDate.of(2025, 4, 22))
 
         //given
         every { workoutsRepository.findByCreatedAt(LocalDate.of(2025, 4, 22)) } returns arrayListOf(workout_2);

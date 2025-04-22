@@ -1,7 +1,7 @@
 CREATE TABLE "exercises" (
   "id" serial PRIMARY KEY,
   "name" varchar,
-  "desc" varchar
+  "description" varchar
 );
 
 CREATE TABLE "workouts" (

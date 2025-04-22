@@ -16,6 +16,21 @@ class EntryServiceTest {
     private val entryService = EntryService(entryRepository)
 
     @Test
+    fun createEntryTest() {
+        //setup
+        val entryPreSave = Entry(id = null, workoutId = 1, exerciseId = 2, weight = 60.1, sets = 3, reps = 10)
+        val entryPostSave = Entry(id = 1, workoutId = 1, exerciseId = 2, weight = 60.1, sets = 3, reps = 10)
+        //given
+        every { entryRepository.save(entryPreSave) } returns entryPostSave;
+
+        //when
+        val result = entryService.createEntry(1, 2, 60.1, 3, 10);
+
+        //then
+        assertEquals(entryPostSave, result)
+    }
+
+    @Test
     fun getAllEntriesTest() {
         //setup
         val entries = listOf(

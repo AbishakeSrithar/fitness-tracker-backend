@@ -1,6 +1,7 @@
 package com.abishake.fitnesstracker.controller
 
 import com.abishake.fitnesstracker.controllers.WorkoutController
+import com.abishake.fitnesstracker.models.Entry
 import com.abishake.fitnesstracker.models.Workout
 import com.abishake.fitnesstracker.service.WorkoutService
 import com.ninjasquad.springmockk.MockkBean
@@ -11,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import java.time.LocalDate
 
@@ -24,24 +26,43 @@ class WorkoutControllerTest(
 
     @MockkBean
     lateinit var workoutService: WorkoutService
+    // CREATE
+    @Test
+    fun createWorkoutControllerTest() {
+        val date = LocalDate.now()
+        val workout = Workout(1, name = "Push Day", createdAt = date)
+
+        every { workoutService.createWorkout("Push Day", date) } returns workout
+
+        mockMvc.perform(post("/api/workout/create?name=Push Day"))
+            .andExpect(status().isOk)
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(
+                content().json(
+                    """
+                {"id":1, "name":"Push Day", "createdAt": "$date"}
+                """
+                )
+            )
+    }
 
     @Test
     fun getAllWorkoutsControllerTest() {
         val workouts = listOf(
-            Workout(id = 1, name = "Push Day", createdAt = LocalDateTime.of(2025, 4, 14, 13, 0, 0, 0)),
-            Workout(id = 2, name = "Pull Day", createdAt = LocalDateTime.of(2025, 4, 15, 13, 0, 0, 0))
+            Workout(id = 1, name = "Push Day", createdAt = LocalDate.of(2025, 4, 14)),
+            Workout(id = 2, name = "Pull Day", createdAt = LocalDate.of(2025, 4, 15))
         )
 
         every { workoutService.getAllWorkouts() } returns workouts
 
-        mockMvc.perform(get("/api/workout/all"))
+        mockMvc.perform(get("/api/workout/get"))
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(
                 content().json(
                 """
-                [{"id":1,"name":"Push Day","createdAt":"2025-04-14T13:00:00"},
-                {"id":2,"name":"Pull Day","createdAt":"2025-04-15T13:00:00"}]
+                [{"id":1,"name":"Push Day","createdAt":"2025-04-14"},
+                {"id":2,"name":"Pull Day","createdAt":"2025-04-15"}]
                 """
                 )
             )
@@ -49,7 +70,7 @@ class WorkoutControllerTest(
 
     @Test
     fun getWorkoutByIdControllerTest() {
-        val workout = Optional.of(Workout(id = 2, name = "Pull Day", createdAt = LocalDateTime.of(2025, 4, 15, 13, 0, 0, 0)))
+        val workout = Optional.of(Workout(id = 2, name = "Pull Day", createdAt = LocalDate.of(2025, 4, 15)))
 
         every { workoutService.getWorkoutById(2) } returns workout
 
@@ -59,7 +80,7 @@ class WorkoutControllerTest(
             .andExpect(
                 content().json(
                     """
-                {"id":2,"name":"Pull Day","createdAt":"2025-04-15T13:00:00"}
+                {"id":2,"name":"Pull Day","createdAt":"2025-04-15"}
                 """
                 )
             )
@@ -68,8 +89,8 @@ class WorkoutControllerTest(
     @Test
     fun getWorkoutByNameControllerTest() {
         val workouts = listOf(
-            Workout(id = 1, name = "Push Day", createdAt = LocalDateTime.of(2025, 4, 14, 13, 0, 0, 0)),
-            Workout(id = 2, name = "Pull Day", createdAt = LocalDateTime.of(2025, 4, 15, 13, 0, 0, 0))
+            Workout(id = 1, name = "Pull Day", createdAt = LocalDate.of(2025, 4, 14)),
+            Workout(id = 2, name = "Pull Day", createdAt = LocalDate.of(2025, 4, 15))
         )
 
         every { workoutService.getWorkoutByName("Pull Day") } returns workouts
@@ -80,8 +101,8 @@ class WorkoutControllerTest(
             .andExpect(
                 content().json(
                     """
-                [{"id":1,"name":"Push Day","createdAt":"2025-04-14T13:00:00"},
-                {"id":2,"name":"Pull Day","createdAt":"2025-04-15T13:00:00"}]
+                [{"id":1,"name":"Pull Day","createdAt":"2025-04-14"},
+                {"id":2,"name":"Pull Day","createdAt":"2025-04-15"}]
                 """
                 )
             )
@@ -90,8 +111,8 @@ class WorkoutControllerTest(
     @Test
     fun getWorkoutByDateControllerTest() {
         val workouts = listOf(
-            Workout(id = 1, name = "Push Day", createdAt = LocalDateTime.of(2025, 4, 14, 13, 0, 0, 0)),
-            Workout(id = 2, name = "Pull Day", createdAt = LocalDateTime.of(2025, 4, 14, 18, 0, 0, 0))
+            Workout(id = 1, name = "Push Day", createdAt = LocalDate.of(2025, 4, 14)),
+            Workout(id = 2, name = "Pull Day", createdAt = LocalDate.of(2025, 4, 14))
         )
 
         every { workoutService.getWorkoutByDate(LocalDate.of(2025, 4, 14)) } returns workouts
@@ -102,8 +123,8 @@ class WorkoutControllerTest(
             .andExpect(
                 content().json(
                     """
-                [{"id":1,"name":"Push Day","createdAt":"2025-04-14T13:00:00"},
-                {"id":2,"name":"Pull Day","createdAt":"2025-04-14T18:00:00"}]
+                [{"id":1,"name":"Push Day","createdAt":"2025-04-14"},
+                {"id":2,"name":"Pull Day","createdAt":"2025-04-14"}]
                 """
                 )
             )

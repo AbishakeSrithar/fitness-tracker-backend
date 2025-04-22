@@ -7,10 +7,7 @@ import jakarta.persistence.*
 data class Exercise(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Int,
-
+    val id: Long? = null,
     val name: String,
-
-    @Column(name = "desc")
     val description: String
 )
