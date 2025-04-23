@@ -12,7 +12,7 @@ class ExerciseService(
 ) {
     // CREATE
     fun createExercise(name: String, description: String): Exercise {
-        return exerciseRepository.save(
+        return exerciseRepository.saveAndFlush(
             Exercise(null, name, description)
         )
     }
@@ -22,11 +22,21 @@ class ExerciseService(
         return exerciseRepository.findAll()
     }
 
-    fun getExerciseById(id: Int): Optional<Exercise> {
+    fun getExerciseById(id: Long): Optional<Exercise> {
         return exerciseRepository.findById(id)
     }
 
     fun getExerciseByName(name: String): Optional<Exercise> {
         return exerciseRepository.findByName(name)
+    }
+
+    // DELETE
+    fun deleteExerciseById(id: Long): String {
+        if (exerciseRepository.findById(id).isPresent) {
+            exerciseRepository.deleteById(id)
+            return "Successfully deleted Exercise with ID: $id"
+        } else {
+            return "Exercise ID: $id not found"
+        }
     }
 }

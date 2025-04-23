@@ -8,8 +8,12 @@ import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
 import java.time.LocalDateTime
 import java.util.*
+import java.util.stream.Stream
 
 class EntryServiceTest {
     private val entryRepository: EntryRepository = mockk()
@@ -21,7 +25,7 @@ class EntryServiceTest {
         val entryPreSave = Entry(id = null, workoutId = 1, exerciseId = 2, weight = 60.1, sets = 3, reps = 10)
         val entryPostSave = Entry(id = 1, workoutId = 1, exerciseId = 2, weight = 60.1, sets = 3, reps = 10)
         //given
-        every { entryRepository.save(entryPreSave) } returns entryPostSave;
+        every { entryRepository.saveAndFlush(entryPreSave) } returns entryPostSave;
 
         //when
         val result = entryService.createEntry(1, 2, 60.1, 3, 10);
@@ -94,5 +98,29 @@ class EntryServiceTest {
 
         //then
         assertEquals(entries, result)
+    }
+
+    @ParameterizedTest
+    @MethodSource("entryIdExistsArgs")
+    fun deleteEntryByIdTest(booleans: Boolean, expected: String) {
+        //given
+        every { entryRepository.findById(2).isPresent } returns booleans;
+        every { entryRepository.deleteById(2) } returns Unit;
+
+        //when
+        val result = entryService.deleteEntryById(2);
+
+        //then
+        assertEquals(expected, result)
+    }
+
+    companion object {
+        @JvmStatic
+        public fun entryIdExistsArgs(): Stream<Arguments> {
+            return Stream.of(
+                Arguments.of(true, "Successfully deleted Entry with ID: 2"),
+                Arguments.of(false, "Entry ID: 2 not found"),
+            )
+        }
     }
 }

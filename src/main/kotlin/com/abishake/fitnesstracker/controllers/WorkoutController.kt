@@ -27,9 +27,7 @@ class WorkoutController(
         } else {
             workoutService.createWorkout(name)
         }
-
     }
-
 
     // READ
     @GetMapping(
@@ -44,7 +42,7 @@ class WorkoutController(
         value = ["/id"],
         produces = ["application/json"]
     )
-    fun getWorkoutById(@RequestParam("id") id: Int): Optional<Workout> {
+    fun getWorkoutById(@RequestParam("id") id: Long): Optional<Workout> {
         return workoutService.getWorkoutById(id)
     }
 
@@ -64,5 +62,16 @@ class WorkoutController(
                          @DateTimeFormat(pattern = "dd/MM/yyyy") date: LocalDate
     ): List<Workout> {
         return workoutService.getWorkoutByDate(date)
+    }
+
+    // DELETE
+    @DeleteMapping(
+        value = ["/delete"],
+        produces = ["application/json"]
+    )
+    fun deleteWorkoutById(
+        @RequestParam("id") id: Long
+    ): String {
+        return workoutService.deleteWorkoutById(id)
     }
 }

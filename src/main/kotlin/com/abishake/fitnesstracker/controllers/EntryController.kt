@@ -1,12 +1,9 @@
 package com.abishake.fitnesstracker.controllers
 
 import com.abishake.fitnesstracker.models.Entry
+import com.abishake.fitnesstracker.models.RestResponse
 import com.abishake.fitnesstracker.service.EntryService
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.util.*
 
 @RestController
@@ -42,7 +39,7 @@ class EntryController(
         value = ["/get/byId"],
         produces = ["application/json"]
     )
-    fun getEntryById(@RequestParam("id") id: Int): Optional<Entry> {
+    fun getEntryById(@RequestParam("id") id: Long): Optional<Entry> {
         return entryService.getEntryById(id)
     }
 
@@ -62,4 +59,14 @@ class EntryController(
         return entryService.getEntriesByExerciseId(exerciseId)
     }
 
+    // DELETE
+    @DeleteMapping(
+        value = ["/delete"],
+        produces = ["application/json"]
+    )
+    fun deleteEntryById(
+        @RequestParam("id") id: Long
+    ): RestResponse {
+        return entryService.deleteEntryById(id)
+    }
 }

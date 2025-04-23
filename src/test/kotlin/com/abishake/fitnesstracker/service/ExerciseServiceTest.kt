@@ -6,7 +6,11 @@ import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
 import java.util.*
+import java.util.stream.Stream
 
 class ExerciseServiceTest {
     private val exerciseRepository: ExerciseRepository = mockk()
@@ -18,7 +22,7 @@ class ExerciseServiceTest {
         val exercisePreSave = Exercise(id = null, name = "Squat", description = "A lower body exercise targeting the quads, glutes, and hamstrings.")
         val exercisePostSave = Exercise(id = 1, name = "Squat", description = "A lower body exercise targeting the quads, glutes, and hamstrings.")
         //given
-        every { exerciseRepository.save(exercisePreSave) } returns exercisePostSave;
+        every { exerciseRepository.saveAndFlush(exercisePreSave) } returns exercisePostSave;
 
         //when
         val result = exerciseService.createExercise("Squat", "A lower body exercise targeting the quads, glutes, and hamstrings.");
@@ -72,5 +76,29 @@ class ExerciseServiceTest {
 
         //then
         assertEquals(exercise, result)
+    }
+
+    @ParameterizedTest
+    @MethodSource("exerciseIdExistsArgs")
+    fun deleteExerciseByIdTest(booleans: Boolean, expected: String) {
+        //given
+        every { exerciseRepository.findById(2).isPresent } returns booleans;
+        every { exerciseRepository.deleteById(2) } returns Unit;
+
+        //when
+        val result = exerciseService.deleteExerciseById(2);
+
+        //then
+        assertEquals(expected, result)
+    }
+
+    companion object {
+        @JvmStatic
+        public fun exerciseIdExistsArgs(): Stream<Arguments> {
+            return Stream.of(
+                Arguments.of(true, "Successfully deleted Exercise with ID: 2"),
+                Arguments.of(false, "Exercise ID: 2 not found"),
+            )
+        }
     }
 }

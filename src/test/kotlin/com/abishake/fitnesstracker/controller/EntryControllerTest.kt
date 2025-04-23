@@ -2,6 +2,7 @@ package com.abishake.fitnesstracker.controller
 
 import com.abishake.fitnesstracker.controllers.EntryController
 import com.abishake.fitnesstracker.models.Entry
+import com.abishake.fitnesstracker.models.RestResponse
 import com.abishake.fitnesstracker.service.EntryService
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
@@ -10,8 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 
 import java.util.*
@@ -122,6 +122,23 @@ class EntryControllerTest(
                     """
                 [{"id":1, "workoutId":1, "exerciseId": 1, "weight":60.0, "sets":3, "reps":10},
                 {"id":2, "workoutId":2, "exerciseId": 1, "weight":60.0, "sets":4, "reps":8}]
+                """
+                )
+            )
+    }
+
+    @Test
+    fun `Delete Entry By Id Controller Test`() {
+
+        every { entryService.deleteEntryById(2) } returns RestResponse("True", "Successfully deleted Entry with ID: 2")
+
+        mockMvc.perform(delete("/api/entry/delete?id=2"))
+            .andExpect(status().isOk)
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(
+                content().json(
+                    """
+                {"isOk": "True", "reason": "Successfully deleted Entry with ID: 2"}
                 """
                 )
             )

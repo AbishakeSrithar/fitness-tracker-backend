@@ -1,6 +1,7 @@
 package com.abishake.fitnesstracker.service
 
 import com.abishake.fitnesstracker.models.Entry
+import com.abishake.fitnesstracker.models.RestResponse
 import com.abishake.fitnesstracker.repositories.EntryRepository
 import org.springframework.stereotype.Service
 import java.util.Optional
@@ -11,7 +12,7 @@ class EntryService(
 ) {
     // CREATE
     fun createEntry(workoutId: Int, exerciseId: Int, weight: Double, sets: Int, reps: Int): Entry {
-        return entryRepository.save(
+        return entryRepository.saveAndFlush(
             Entry(null, workoutId, exerciseId, weight, sets, reps)
         )
     }
@@ -21,7 +22,7 @@ class EntryService(
         return entryRepository.findAll()
     }
 
-    fun getEntryById(id: Int): Optional<Entry> {
+    fun getEntryById(id: Long): Optional<Entry> {
         return entryRepository.findById(id)
     }
 
@@ -31,5 +32,15 @@ class EntryService(
 
     fun getEntriesByExerciseId(exerciseId: Int): List<Entry> {
         return entryRepository.findByExerciseId(exerciseId)
+    }
+
+    // DELETE
+    fun deleteEntryById(id: Long): RestResponse {
+        if (entryRepository.findById(id).isPresent) {
+            entryRepository.deleteById(id)
+            return RestResponse("True", "Successfully deleted Entry with ID: $id")
+        } else {
+            return RestResponse("False", "Entry ID: $id not found")
+        }
     }
 }

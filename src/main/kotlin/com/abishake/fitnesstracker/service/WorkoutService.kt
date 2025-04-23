@@ -1,11 +1,9 @@
 package com.abishake.fitnesstracker.service
 
-import com.abishake.fitnesstracker.models.Exercise
 import com.abishake.fitnesstracker.models.Workout
 import com.abishake.fitnesstracker.repositories.WorkoutRepository
 import org.springframework.stereotype.Service
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.util.*
 
 @Service
@@ -14,18 +12,17 @@ class WorkoutService(
 ) {
     // CREATE
     fun createWorkout(name: String, createdAt: LocalDate = LocalDate.now()): Workout {
-        return workoutRepository.save(
+        return workoutRepository.saveAndFlush(
             Workout(null, name, createdAt)
         )
     }
-
 
     // READ
     fun getAllWorkouts(): List<Workout> {
         return workoutRepository.findAll()
     }
 
-    fun getWorkoutById(id: Int): Optional<Workout> {
+    fun getWorkoutById(id: Long): Optional<Workout> {
         return workoutRepository.findById(id)
     }
 
@@ -35,5 +32,15 @@ class WorkoutService(
 
     fun getWorkoutByDate(date: LocalDate): List<Workout> {
         return workoutRepository.findByCreatedAt(date)
+    }
+
+    // DELETE
+    fun deleteWorkoutById(id: Long): String {
+        if (workoutRepository.findById(id).isPresent) {
+            workoutRepository.deleteById(id)
+            return "Successfully deleted Workout with ID: $id"
+        } else {
+            return "Workout ID: $id not found"
+        }
     }
 }

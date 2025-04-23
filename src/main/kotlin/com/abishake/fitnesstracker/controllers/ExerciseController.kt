@@ -37,7 +37,7 @@ class ExerciseController(
         value = ["/id"],
         produces = ["application/json"]
     )
-    fun getWorkoutById(@RequestParam("id") id: Int): Optional<Exercise> {
+    fun getWorkoutById(@RequestParam("id") id: Long): Optional<Exercise> {
         return exerciseService.getExerciseById(id)
     }
 
@@ -47,5 +47,16 @@ class ExerciseController(
     )
     fun getWorkoutByName(@RequestParam("name") name: String): Optional<Exercise>{
         return exerciseService.getExerciseByName(name)
+    }
+
+    // DELETE
+    @DeleteMapping(
+        value = ["/delete"],
+        produces = ["application/json"]
+    )
+    fun deleteExerciseById(
+        @RequestParam("id") id: Long
+    ): String {
+        return exerciseService.deleteExerciseById(id)
     }
 }
