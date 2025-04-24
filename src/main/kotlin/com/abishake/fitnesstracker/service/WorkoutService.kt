@@ -1,5 +1,6 @@
 package com.abishake.fitnesstracker.service
 
+import com.abishake.fitnesstracker.models.RestResponse
 import com.abishake.fitnesstracker.models.Workout
 import com.abishake.fitnesstracker.repositories.WorkoutRepository
 import org.springframework.stereotype.Service
@@ -35,12 +36,12 @@ class WorkoutService(
     }
 
     // DELETE
-    fun deleteWorkoutById(id: Long): String {
+    fun deleteWorkoutById(id: Long): RestResponse {
         if (workoutRepository.findById(id).isPresent) {
             workoutRepository.deleteById(id)
-            return "Successfully deleted Workout with ID: $id"
+            return RestResponse("True", "Successfully deleted Workout with ID: $id")
         } else {
-            return "Workout ID: $id not found"
+            return RestResponse("False", "Workout ID: $id not found")
         }
     }
 }

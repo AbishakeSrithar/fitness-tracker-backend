@@ -1,6 +1,7 @@
 package com.abishake.fitnesstracker.controllers
 
 import com.abishake.fitnesstracker.models.Exercise
+import com.abishake.fitnesstracker.models.RestResponse
 import com.abishake.fitnesstracker.models.Workout
 import com.abishake.fitnesstracker.service.WorkoutService
 import org.springframework.format.annotation.DateTimeFormat
@@ -71,7 +72,7 @@ class WorkoutController(
     )
     fun deleteWorkoutById(
         @RequestParam("id") id: Long
-    ): String {
+    ): RestResponse {
         return workoutService.deleteWorkoutById(id)
     }
 }

@@ -1,5 +1,6 @@
 package com.abishake.fitnesstracker.service
 
+import com.abishake.fitnesstracker.models.RestResponse
 import com.abishake.fitnesstracker.models.Workout
 import com.abishake.fitnesstracker.repositories.WorkoutRepository
 import io.mockk.every
@@ -9,7 +10,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
-import org.junit.jupiter.params.provider.ValueSource
 import java.time.LocalDate
 import java.util.*
 import java.util.stream.Stream
@@ -26,10 +26,10 @@ class WorkoutServiceTest {
         val workoutPreSave = Workout(id = null, name = "Pull Day", createdAt = date)
         val workoutPostSave = Workout(id = 2, name = "Pull Day", createdAt = date)
         //given
-        every { workoutsRepository.saveAndFlush(workoutPreSave) } returns workoutPostSave;
+        every { workoutsRepository.saveAndFlush(workoutPreSave) } returns workoutPostSave
 
         //when
-        val result = workoutService.createWorkout("Pull Day", date);
+        val result = workoutService.createWorkout("Pull Day", date)
 
         //then
         assertEquals(workoutPostSave, result)
@@ -45,10 +45,10 @@ class WorkoutServiceTest {
         )
 
         //given
-        every { workoutsRepository.findAll() } returns workouts;
+        every { workoutsRepository.findAll() } returns workouts
 
         //when
-        val result = workoutService.getAllWorkouts();
+        val result = workoutService.getAllWorkouts()
 
         //then
         assertEquals(workouts, result)
@@ -60,10 +60,10 @@ class WorkoutServiceTest {
         val workout = Optional.of(Workout(id = 2, name = "Pull Day", createdAt = LocalDate.of(2025, 4, 14)))
 
         //given
-        every { workoutsRepository.findById(2) } returns workout;
+        every { workoutsRepository.findById(2) } returns workout
 
         //when
-        val result = workoutService.getWorkoutById(2);
+        val result = workoutService.getWorkoutById(2)
 
         //then
         assertEquals(workout, result)
@@ -72,43 +72,43 @@ class WorkoutServiceTest {
     @Test
     fun getWorkoutByNameServiceTest() {
         //setup
-        val workout_1 = Workout(id = 2, name = "Pull Day", createdAt = LocalDate.of(2025, 4, 14))
-        val workout_2 = Workout(id = 7, name = "Pull Day", createdAt = LocalDate.of(2025, 4, 22))
+        val workout1 = Workout(id = 2, name = "Pull Day", createdAt = LocalDate.of(2025, 4, 14))
+        val workout2 = Workout(id = 7, name = "Pull Day", createdAt = LocalDate.of(2025, 4, 22))
 
         //given
-        every { workoutsRepository.findByName("Pull Day") } returns arrayListOf(workout_1, workout_2);
+        every { workoutsRepository.findByName("Pull Day") } returns arrayListOf(workout1, workout2)
 
         //when
-        val result = workoutService.getWorkoutByName("Pull Day");
+        val result = workoutService.getWorkoutByName("Pull Day")
 
         //then
-        assertEquals(arrayListOf(workout_1, workout_2), result)
+        assertEquals(arrayListOf(workout1, workout2), result)
     }
 
     @Test
     fun getWorkoutByDateServiceTest() {
         //setup
-        val workout_2 = Workout(id = 7, name = "Pull Day", createdAt = LocalDate.of(2025, 4, 22))
+        val workout2 = Workout(id = 7, name = "Pull Day", createdAt = LocalDate.of(2025, 4, 22))
 
         //given
-        every { workoutsRepository.findByCreatedAt(LocalDate.of(2025, 4, 22)) } returns arrayListOf(workout_2);
+        every { workoutsRepository.findByCreatedAt(LocalDate.of(2025, 4, 22)) } returns arrayListOf(workout2)
 
         //when
-        val result = workoutService.getWorkoutByDate(LocalDate.of(2025, 4, 22));
+        val result = workoutService.getWorkoutByDate(LocalDate.of(2025, 4, 22))
 
         //then
-        assertEquals(arrayListOf(workout_2), result)
+        assertEquals(arrayListOf(workout2), result)
     }
 
     @ParameterizedTest
     @MethodSource("workoutIdExistsArgs")
-    fun deleteWorkoutByIdTest(booleans: Boolean, expected: String) {
+    fun deleteWorkoutByIdTest(booleans: Boolean, expected: RestResponse) {
         //given
-        every { workoutsRepository.findById(2).isPresent } returns booleans;
-        every { workoutsRepository.deleteById(2) } returns Unit;
+        every { workoutsRepository.findById(2).isPresent } returns booleans
+        every { workoutsRepository.deleteById(2) } returns Unit
 
         //when
-        val result = workoutService.deleteWorkoutById(2);
+        val result = workoutService.deleteWorkoutById(2)
 
         //then
         assertEquals(expected, result)
@@ -116,10 +116,10 @@ class WorkoutServiceTest {
 
     companion object {
         @JvmStatic
-        public fun workoutIdExistsArgs(): Stream<Arguments> {
+        fun workoutIdExistsArgs(): Stream<Arguments> {
             return Stream.of(
-                Arguments.of(true, "Successfully deleted Workout with ID: 2"),
-                Arguments.of(false, "Workout ID: 2 not found"),
+                Arguments.of(true, RestResponse("True", "Successfully deleted Workout with ID: 2")),
+                Arguments.of(false, RestResponse("False", "Workout ID: 2 not found")),
             )
         }
     }

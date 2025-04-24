@@ -1,6 +1,7 @@
 package com.abishake.fitnesstracker.service
 
 import com.abishake.fitnesstracker.models.Exercise
+import com.abishake.fitnesstracker.models.RestResponse
 import com.abishake.fitnesstracker.repositories.ExerciseRepository
 import io.mockk.every
 import io.mockk.mockk
@@ -80,7 +81,7 @@ class ExerciseServiceTest {
 
     @ParameterizedTest
     @MethodSource("exerciseIdExistsArgs")
-    fun deleteExerciseByIdTest(booleans: Boolean, expected: String) {
+    fun deleteExerciseByIdTest(booleans: Boolean, expected: RestResponse) {
         //given
         every { exerciseRepository.findById(2).isPresent } returns booleans;
         every { exerciseRepository.deleteById(2) } returns Unit;
@@ -94,10 +95,10 @@ class ExerciseServiceTest {
 
     companion object {
         @JvmStatic
-        public fun exerciseIdExistsArgs(): Stream<Arguments> {
+        fun exerciseIdExistsArgs(): Stream<Arguments> {
             return Stream.of(
-                Arguments.of(true, "Successfully deleted Exercise with ID: 2"),
-                Arguments.of(false, "Exercise ID: 2 not found"),
+                Arguments.of(true, RestResponse("True", "Successfully deleted Exercise with ID: 2")),
+                Arguments.of(false, RestResponse("False", "Exercise ID: 2 not found")),
             )
         }
     }
