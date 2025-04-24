@@ -101,6 +101,24 @@ class EntryServiceTest {
         assertEquals(entries, result)
     }
 
+    @Test
+    fun updateEntryByIdTest() {
+        //setup
+        val entryPreUpdate = Entry(id = 2, workoutId = 1, exerciseId = 2, weight = 60.1, sets = 3, reps = 10)
+        val entryPostUpdate = Entry(id = 2, workoutId = 1, exerciseId = 2, weight = 75.1, sets = 5, reps = 12)
+        val expectedRes = RestResponse("True", "Successfully updated Entry with ID: 2 to have weight=75.1, sets=5, reps=12")
+
+        //given
+        every { entryRepository.findById(2) } returns Optional.of(entryPreUpdate);
+        every { entryRepository.saveAndFlush(entryPostUpdate) } returns entryPostUpdate;
+
+        //when
+        val result = entryService.updateEntryById(2, 75.1, 5, 12);
+
+        //then
+        assertEquals(expectedRes, result)
+    }
+
     @ParameterizedTest
     @MethodSource("entryIdExistsArgs")
     fun deleteEntryByIdTest(booleans: Boolean, expected: RestResponse) {

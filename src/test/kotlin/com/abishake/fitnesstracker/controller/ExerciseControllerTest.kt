@@ -119,6 +119,23 @@ class ExerciseControllerTest(
     }
 
     @Test
+    fun `Update Exercise By Id Controller Test`() {
+
+        every { exerciseService.updateExerciseById(2, "Push Up +", "Push up with serratus anterior activation") } returns RestResponse("True", "Successfully updated Entry with ID: 2 to have name=70.0, description=Push up with serratus anterior activation")
+
+        mockMvc.perform(put("/api/exercise/update?id=2&name=Push Up +&description=Push up with serratus anterior activation"))
+            .andExpect(status().isOk)
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(
+                content().json(
+                    """
+                {"isOk": "True", "reason": "Successfully updated Entry with ID: 2 to have name=70.0, description=Push up with serratus anterior activation"}
+                """
+                )
+            )
+    }
+
+    @Test
     fun `Delete Exercise By Id Controller Test`() {
 
         every { exerciseService.deleteExerciseById(2) } returns RestResponse("True", "Successfully deleted Exercise with ID: 2")

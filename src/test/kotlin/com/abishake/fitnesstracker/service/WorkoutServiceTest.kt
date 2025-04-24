@@ -1,5 +1,6 @@
 package com.abishake.fitnesstracker.service
 
+import com.abishake.fitnesstracker.models.Entry
 import com.abishake.fitnesstracker.models.RestResponse
 import com.abishake.fitnesstracker.models.Workout
 import com.abishake.fitnesstracker.repositories.WorkoutRepository
@@ -98,6 +99,26 @@ class WorkoutServiceTest {
 
         //then
         assertEquals(arrayListOf(workout2), result)
+    }
+
+    @Test
+    fun updateWorkoutByIdTest() {
+        //setup
+        val datePreUpdate = LocalDate.of(2025, 4, 14)
+        val datePostUpdate = LocalDate.of(2024, 5, 22)
+        val workoutPreUpdate = Workout(id = 2, name = "Pull Day", createdAt = datePreUpdate)
+        val workoutPostUpdate = Workout(id = 2, name = "Pull + Push Day", createdAt = datePostUpdate)
+        val expectedRes = RestResponse("True", "Successfully updated Workout with ID: 2 to have name=Pull + Push Day, createdAt=2024-05-22")
+
+        //given
+        every { workoutsRepository.findById(2) } returns Optional.of(workoutPreUpdate);
+        every { workoutsRepository.saveAndFlush(workoutPostUpdate) } returns workoutPostUpdate;
+
+        //when
+        val result = workoutService.updateWorkoutById(2, "Pull + Push Day", datePostUpdate);
+
+        //then
+        assertEquals(expectedRes, result)
     }
 
     @ParameterizedTest

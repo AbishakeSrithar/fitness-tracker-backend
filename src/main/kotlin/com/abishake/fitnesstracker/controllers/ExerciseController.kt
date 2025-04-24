@@ -50,6 +50,19 @@ class ExerciseController(
         return exerciseService.getExerciseByName(name)
     }
 
+    // UPDATE
+    @PutMapping(
+        value = ["/update"],
+        produces = ["application/json"]
+    )
+    fun updateWorkout(
+        @RequestParam("id") id: Long,
+        @RequestParam("name") name: String,
+        @RequestParam("description") description: String
+    ): RestResponse {
+        return exerciseService.updateExerciseById(id, name, description)
+    }
+
     // DELETE
     @DeleteMapping(
         value = ["/delete"],

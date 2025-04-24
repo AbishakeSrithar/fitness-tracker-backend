@@ -35,6 +35,24 @@ class WorkoutService(
         return workoutRepository.findByCreatedAt(date)
     }
 
+    //  UPDATE
+    fun updateWorkoutById(id: Long, name: String, date: LocalDate): RestResponse {
+        if (getWorkoutById(id).isPresent) {
+            val workout = getWorkoutById(id).get()
+            workout.name = name
+            workout.createdAt = date
+
+            try {
+                workoutRepository.saveAndFlush(workout)
+                return RestResponse("True", "Successfully updated Workout with ID: $id to have name=$name, createdAt=$date")
+            } catch (e: Exception) {
+                return RestResponse("False", "Error while updating Workout with ID: $id")
+            }
+        } else {
+            return RestResponse("False", "Cannot find Workout with ID: $id to update")
+        }
+    }
+
     // DELETE
     fun deleteWorkoutById(id: Long): RestResponse {
         if (workoutRepository.findById(id).isPresent) {

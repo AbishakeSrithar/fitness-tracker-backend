@@ -128,6 +128,23 @@ class EntryControllerTest(
     }
 
     @Test
+    fun `Update Entry By Id Controller Test`() {
+
+        every { entryService.updateEntryById(2, 70.0, 5, 12) } returns RestResponse("True", "Successfully updated Entry with ID: 2 to have weight=70.0, sets=5, reps=12")
+
+        mockMvc.perform(put("/api/entry/update?id=2&weight=70.0&sets=5&reps=12"))
+            .andExpect(status().isOk)
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(
+                content().json(
+                    """
+                {"isOk": "True", "reason": "Successfully updated Entry with ID: 2 to have weight=70.0, sets=5, reps=12"}
+                """
+                )
+            )
+    }
+
+    @Test
     fun `Delete Entry By Id Controller Test`() {
 
         every { entryService.deleteEntryById(2) } returns RestResponse("True", "Successfully deleted Entry with ID: 2")

@@ -10,7 +10,7 @@ data class Workout(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
-    val name: String,
+    var name: String,
     @Column(name = "created_at")
-    val createdAt: LocalDate = LocalDate.now()
+    var createdAt: LocalDate = LocalDate.now()
 )

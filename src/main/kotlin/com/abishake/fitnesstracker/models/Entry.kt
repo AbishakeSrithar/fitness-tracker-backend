@@ -10,7 +10,7 @@ data class Entry(
     val id: Long? = null,
     val workoutId: Int,
     val exerciseId: Int,
-    val weight: Double,
-    val sets: Int,
-    val reps: Int
+    var weight: Double,
+    var sets: Int,
+    var reps: Int
 )

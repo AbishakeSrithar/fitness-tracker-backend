@@ -1,5 +1,6 @@
 package com.abishake.fitnesstracker.service
 
+import com.abishake.fitnesstracker.models.Entry
 import com.abishake.fitnesstracker.models.Exercise
 import com.abishake.fitnesstracker.models.RestResponse
 import com.abishake.fitnesstracker.repositories.ExerciseRepository
@@ -77,6 +78,24 @@ class ExerciseServiceTest {
 
         //then
         assertEquals(exercise, result)
+    }
+
+    @Test
+    fun updateExerciseByIdTest() {
+        //setup
+        val exercisePreUpdate = Exercise(id = 1, name = "Squat", description = "A lower body exercise targeting the quads, glutes, and hamstrings.")
+        val exercisePostUpdate = Exercise(id = 1, name = "Back Squat", description = "A lower body exercise targeting the quads, glutes, and hamstrings with bar on your back.")
+        val expectedRes = RestResponse("True", "Successfully updated Exercise with ID: 1 to have name=Back Squat, description=A lower body exercise targeting the quads, glutes, and hamstrings with bar on your back.")
+
+        //given
+        every { exerciseRepository.findById(1) } returns Optional.of(exercisePreUpdate);
+        every { exerciseRepository.saveAndFlush(exercisePostUpdate) } returns exercisePostUpdate;
+
+        //when
+        val result = exerciseService.updateExerciseById(1, "Back Squat", "A lower body exercise targeting the quads, glutes, and hamstrings with bar on your back.");
+
+        //then
+        assertEquals(expectedRes, result)
     }
 
     @ParameterizedTest

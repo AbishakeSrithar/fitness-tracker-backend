@@ -34,6 +34,26 @@ class EntryService(
         return entryRepository.findByExerciseId(exerciseId)
     }
 
+    //  UPDATE
+    fun updateEntryById(id: Long, weight: Double, sets: Int, reps: Int): RestResponse {
+        // Find the Entry if it exists (return can't find if not)
+        if (getEntryById(id).isPresent) {
+            val entry = getEntryById(id).get()
+            entry.weight = weight
+            entry.sets = sets
+            entry.reps = reps
+
+            try {
+                entryRepository.saveAndFlush(entry)
+                return RestResponse("True", "Successfully updated Entry with ID: $id to have weight=$weight, sets=$sets, reps=$reps")
+            } catch (e: Exception) {
+                return RestResponse("False", "Error while updating Entry with ID: $id")
+            }
+        } else {
+            return RestResponse("False", "Cannot find Entry with ID: $id to update")
+        }
+    }
+
     // DELETE
     fun deleteEntryById(id: Long): RestResponse {
         if (entryRepository.findById(id).isPresent) {

@@ -15,8 +15,6 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import java.time.LocalDate
-
-import java.time.LocalDateTime
 import java.util.Optional
 
 @WebMvcTest(WorkoutController::class)
@@ -125,6 +123,23 @@ class WorkoutControllerTest(
                     """
                 [{"id":1,"name":"Push Day","createdAt":"2025-04-14"},
                 {"id":2,"name":"Pull Day","createdAt":"2025-04-14"}]
+                """
+                )
+            )
+    }
+
+    @Test
+    fun `Update Workout By Id Controller Test`() {
+
+        every { workoutService.updateWorkoutById(2, "Morning Routine", LocalDate.of(2025, 4, 12)) } returns RestResponse("True", "Successfully updated Workout with ID: 2 to have name=Morning Routine, createdAt=2025-04-12")
+
+        mockMvc.perform(put("/api/workout/update?id=2&name=Morning Routine&date=2025-04-12"))
+            .andExpect(status().isOk)
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(
+                content().json(
+                    """
+                {"isOk": "True", "reason": "Successfully updated Workout with ID: 2 to have name=Morning Routine, createdAt=2025-04-12"}
                 """
                 )
             )

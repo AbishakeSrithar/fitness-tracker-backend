@@ -31,6 +31,24 @@ class ExerciseService(
         return exerciseRepository.findByName(name)
     }
 
+    //  UPDATE
+    fun updateExerciseById(id: Long, name: String, description: String): RestResponse {
+        if (getExerciseById(id).isPresent) {
+            val exercise = getExerciseById(id).get()
+            exercise.name = name
+            exercise.description = description
+
+            try {
+                exerciseRepository.saveAndFlush(exercise)
+                return RestResponse("True", "Successfully updated Exercise with ID: $id to have name=$name, description=$description")
+            } catch (e: Exception) {
+                return RestResponse("False", "Error while updating Exercise with ID: $id")
+            }
+        } else {
+            return RestResponse("False", "Cannot find Exercise with ID: $id to update")
+        }
+    }
+
     // DELETE
     fun deleteExerciseById(id: Long): RestResponse {
         if (exerciseRepository.findById(id).isPresent) {

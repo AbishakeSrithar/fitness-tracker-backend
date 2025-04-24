@@ -3,7 +3,9 @@ package com.abishake.fitnesstracker.controllers
 import com.abishake.fitnesstracker.models.Entry
 import com.abishake.fitnesstracker.models.RestResponse
 import com.abishake.fitnesstracker.service.EntryService
+import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.web.bind.annotation.*
+import java.time.LocalDate
 import java.util.*
 
 @RestController
@@ -57,6 +59,20 @@ class EntryController(
     )
     fun getEntryByExerciseId(@RequestParam("exerciseId") exerciseId: Int): List<Entry> {
         return entryService.getEntriesByExerciseId(exerciseId)
+    }
+
+    // UPDATE
+    @PutMapping(
+        value = ["/update"],
+        produces = ["application/json"]
+    )
+    fun updateEntry(
+        @RequestParam("id") id: Long,
+        @RequestParam("weight") weight: Double,
+        @RequestParam("sets") sets: Int,
+        @RequestParam("reps") reps: Int
+    ): RestResponse {
+        return entryService.updateEntryById(id, weight, sets, reps)
     }
 
     // DELETE

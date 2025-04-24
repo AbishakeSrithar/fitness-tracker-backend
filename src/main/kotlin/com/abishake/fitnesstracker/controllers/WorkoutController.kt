@@ -65,6 +65,19 @@ class WorkoutController(
         return workoutService.getWorkoutByDate(date)
     }
 
+    // UPDATE
+    @PutMapping(
+        value = ["/update"],
+        produces = ["application/json"]
+    )
+    fun updateWorkout(
+        @RequestParam("id") id: Long,
+        @RequestParam("name") name: String,
+        @RequestParam("date") @DateTimeFormat(pattern = "dd/MM/yyyy") date: LocalDate
+    ): RestResponse {
+        return workoutService.updateWorkoutById(id, name, date)
+    }
+
     // DELETE
     @DeleteMapping(
         value = ["/delete"],

@@ -8,6 +8,6 @@ data class Exercise(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
-    val name: String,
-    val description: String
+    var name: String,
+    var description: String
 )
