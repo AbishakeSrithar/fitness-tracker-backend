@@ -8,5 +8,5 @@ import java.time.LocalDate
 @Repository
 interface WorkoutRepository : JpaRepository<Workout, Long> {
     fun findByName(name: String): List<Workout>
-    fun findByCreatedAt(date: LocalDate): List<Workout>
+    fun findByDate(date: LocalDate): List<Workout>
 }

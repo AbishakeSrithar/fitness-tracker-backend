@@ -3,7 +3,6 @@ package com.abishake.fitnesstracker.controller
 import com.abishake.fitnesstracker.controllers.ExerciseController
 import com.abishake.fitnesstracker.models.Exercise
 import com.abishake.fitnesstracker.models.RestResponse
-import com.abishake.fitnesstracker.models.Workout
 import com.abishake.fitnesstracker.service.ExerciseService
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
@@ -25,7 +24,7 @@ class ExerciseControllerTest(
     lateinit var exerciseService: ExerciseService
     // CREATE
     @Test
-    fun createExerciseControllerTest() {
+    fun `Create Exercise`() {
         val exercise = Exercise(1, name = "Deadlift", description = "Die by lifting")
 
         every { exerciseService.createExercise("Deadlift", "Die by lifting") } returns exercise
@@ -44,7 +43,7 @@ class ExerciseControllerTest(
 
     // READ
     @Test
-    fun getAllExercisesControllerTest() {
+    fun `Get All Exercises`() {
         val exercises = listOf(
             Exercise(
                 id = 1,
@@ -74,7 +73,7 @@ class ExerciseControllerTest(
     }
 
     @Test
-    fun getExerciseByIdControllerTest() {
+    fun `Get Exercise by Id`() {
         val exercise = Optional.of(Exercise(
             id = 2,
             name = "Bench Press",
@@ -96,7 +95,7 @@ class ExerciseControllerTest(
     }
 
     @Test
-    fun getExerciseByNameControllerTest() {
+    fun `Get Exercise by Name`() {
         val exercise = Optional.of(Exercise(
             id = 2,
             name = "Bench Press",
@@ -119,7 +118,7 @@ class ExerciseControllerTest(
     }
 
     @Test
-    fun `Update Exercise By Id Controller Test`() {
+    fun `Update Exercise By Id Controller`() {
 
         every { exerciseService.updateExerciseById(2, "Push Up +", "Push up with serratus anterior activation") } returns RestResponse("True", "Successfully updated Entry with ID: 2 to have name=70.0, description=Push up with serratus anterior activation")
 
@@ -136,7 +135,7 @@ class ExerciseControllerTest(
     }
 
     @Test
-    fun `Delete Exercise By Id Controller Test`() {
+    fun `Delete Exercise By Id Controller`() {
 
         every { exerciseService.deleteExerciseById(2) } returns RestResponse("True", "Successfully deleted Exercise with ID: 2")
 

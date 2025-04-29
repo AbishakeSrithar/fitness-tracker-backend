@@ -25,7 +25,7 @@ class EntryControllerTest(
     lateinit var entryService: EntryService
     // CREATE
     @Test
-    fun createEntryControllerTest() {
+    fun `Create Entry`() {
         val entry = Entry(1, workoutId = 2, exerciseId = 3,  weight = 60.2, sets = 4, reps = 10)
 
         every { entryService.createEntry(2, 3, 60.2, 4, 10) } returns entry
@@ -44,7 +44,7 @@ class EntryControllerTest(
 
     // READ
     @Test
-    fun getAllEntriesControllerTest() {
+    fun `Get All Entries`() {
         val entries = listOf(
             Entry(id = 1, workoutId = 1, exerciseId = 1, weight = 60.0, sets = 3, reps = 10),
             Entry(id = 2, workoutId = 1, exerciseId = 2, weight = 60.0, sets = 4, reps = 8)
@@ -66,7 +66,7 @@ class EntryControllerTest(
     }
 
     @Test
-    fun getEntryByIdControllerTest() {
+    fun `Get Entry by Id`() {
         val entry = Optional.of(Entry(id = 1, workoutId = 1, exerciseId = 1, weight = 60.0, sets = 3, reps = 10))
 
         every { entryService.getEntryById(1) } returns entry
@@ -84,7 +84,7 @@ class EntryControllerTest(
     }
 
     @Test
-    fun getEntriesByWorkoutIdControllerTest() {
+    fun `Get Entries by Workout Id`() {
         val entries = listOf(
             Entry(id = 1, workoutId = 1, exerciseId = 1, weight = 60.0, sets = 3, reps = 10),
             Entry(id = 2, workoutId = 1, exerciseId = 2, weight = 60.0, sets = 4, reps = 8)
@@ -106,7 +106,7 @@ class EntryControllerTest(
     }
 
     @Test
-    fun getEntriesByExerciseIdControllerTest() {
+    fun `Get Entries by Exercise Id`() {
         val entries = listOf(
             Entry(id = 1, workoutId = 1, exerciseId = 1, weight = 60.0, sets = 3, reps = 10),
             Entry(id = 2, workoutId = 2, exerciseId = 1, weight = 60.0, sets = 4, reps = 8)
@@ -128,7 +128,7 @@ class EntryControllerTest(
     }
 
     @Test
-    fun `Update Entry By Id Controller Test`() {
+    fun `Update Entry By Id Controller`() {
 
         every { entryService.updateEntryById(2, 70.0, 5, 12) } returns RestResponse("True", "Successfully updated Entry with ID: 2 to have weight=70.0, sets=5, reps=12")
 
@@ -145,7 +145,7 @@ class EntryControllerTest(
     }
 
     @Test
-    fun `Delete Entry By Id Controller Test`() {
+    fun `Delete Entry By Id Controller`() {
 
         every { entryService.deleteEntryById(2) } returns RestResponse("True", "Successfully deleted Entry with ID: 2")
 

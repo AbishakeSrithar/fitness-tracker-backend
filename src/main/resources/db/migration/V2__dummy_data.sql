@@ -5,7 +5,7 @@ INSERT INTO "exercises" ("name", "description") VALUES
   ('Plank', 'A core stability exercise');
 
 -- Insert dummy data into Workouts
-INSERT INTO "workouts" ("name", "created_at") VALUES
+INSERT INTO "workouts" ("name", "date") VALUES
   ('Push Routine', CURRENT_TIMESTAMP),
   ('Pull Routine', CURRENT_TIMESTAMP),
   ('Legs Routine', CURRENT_TIMESTAMP);

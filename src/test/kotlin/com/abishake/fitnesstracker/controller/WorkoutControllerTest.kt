@@ -1,7 +1,6 @@
 package com.abishake.fitnesstracker.controller
 
 import com.abishake.fitnesstracker.controllers.WorkoutController
-import com.abishake.fitnesstracker.models.Entry
 import com.abishake.fitnesstracker.models.RestResponse
 import com.abishake.fitnesstracker.models.Workout
 import com.abishake.fitnesstracker.service.WorkoutService
@@ -26,9 +25,9 @@ class WorkoutControllerTest(
     lateinit var workoutService: WorkoutService
     // CREATE
     @Test
-    fun createWorkoutControllerTest() {
+    fun `Create Workout`() {
         val date = LocalDate.now()
-        val workout = Workout(1, name = "Push Day", createdAt = date)
+        val workout = Workout(1, name = "Push Day", date = date)
 
         every { workoutService.createWorkout("Push Day", date) } returns workout
 
@@ -38,17 +37,17 @@ class WorkoutControllerTest(
             .andExpect(
                 content().json(
                     """
-                {"id":1, "name":"Push Day", "createdAt": "$date"}
+                {"id":1, "name":"Push Day", "date": "$date"}
                 """
                 )
             )
     }
 
     @Test
-    fun getAllWorkoutsControllerTest() {
+    fun `Get All Workouts`() {
         val workouts = listOf(
-            Workout(id = 1, name = "Push Day", createdAt = LocalDate.of(2025, 4, 14)),
-            Workout(id = 2, name = "Pull Day", createdAt = LocalDate.of(2025, 4, 15))
+            Workout(id = 1, name = "Push Day", date = LocalDate.of(2025, 4, 14)),
+            Workout(id = 2, name = "Pull Day", date = LocalDate.of(2025, 4, 15))
         )
 
         every { workoutService.getAllWorkouts() } returns workouts
@@ -59,16 +58,16 @@ class WorkoutControllerTest(
             .andExpect(
                 content().json(
                 """
-                [{"id":1,"name":"Push Day","createdAt":"2025-04-14"},
-                {"id":2,"name":"Pull Day","createdAt":"2025-04-15"}]
+                [{"id":1,"name":"Push Day","date":"2025-04-14"},
+                {"id":2,"name":"Pull Day","date":"2025-04-15"}]
                 """
                 )
             )
     }
 
     @Test
-    fun getWorkoutByIdControllerTest() {
-        val workout = Optional.of(Workout(id = 2, name = "Pull Day", createdAt = LocalDate.of(2025, 4, 15)))
+    fun `Get Workout by Id`() {
+        val workout = Optional.of(Workout(id = 2, name = "Pull Day", date = LocalDate.of(2025, 4, 15)))
 
         every { workoutService.getWorkoutById(2) } returns workout
 
@@ -78,17 +77,17 @@ class WorkoutControllerTest(
             .andExpect(
                 content().json(
                     """
-                {"id":2,"name":"Pull Day","createdAt":"2025-04-15"}
+                {"id":2,"name":"Pull Day","date":"2025-04-15"}
                 """
                 )
             )
     }
 
     @Test
-    fun getWorkoutByNameControllerTest() {
+    fun `Get Workouts by Name`() {
         val workouts = listOf(
-            Workout(id = 1, name = "Pull Day", createdAt = LocalDate.of(2025, 4, 14)),
-            Workout(id = 2, name = "Pull Day", createdAt = LocalDate.of(2025, 4, 15))
+            Workout(id = 1, name = "Pull Day", date = LocalDate.of(2025, 4, 14)),
+            Workout(id = 2, name = "Pull Day", date = LocalDate.of(2025, 4, 15))
         )
 
         every { workoutService.getWorkoutByName("Pull Day") } returns workouts
@@ -99,18 +98,18 @@ class WorkoutControllerTest(
             .andExpect(
                 content().json(
                     """
-                [{"id":1,"name":"Pull Day","createdAt":"2025-04-14"},
-                {"id":2,"name":"Pull Day","createdAt":"2025-04-15"}]
+                [{"id":1,"name":"Pull Day","date":"2025-04-14"},
+                {"id":2,"name":"Pull Day","date":"2025-04-15"}]
                 """
                 )
             )
     }
 
     @Test
-    fun getWorkoutByDateControllerTest() {
+    fun `Get Workouts by Date`() {
         val workouts = listOf(
-            Workout(id = 1, name = "Push Day", createdAt = LocalDate.of(2025, 4, 14)),
-            Workout(id = 2, name = "Pull Day", createdAt = LocalDate.of(2025, 4, 14))
+            Workout(id = 1, name = "Push Day", date = LocalDate.of(2025, 4, 14)),
+            Workout(id = 2, name = "Pull Day", date = LocalDate.of(2025, 4, 14))
         )
 
         every { workoutService.getWorkoutByDate(LocalDate.of(2025, 4, 14)) } returns workouts
@@ -121,17 +120,17 @@ class WorkoutControllerTest(
             .andExpect(
                 content().json(
                     """
-                [{"id":1,"name":"Push Day","createdAt":"2025-04-14"},
-                {"id":2,"name":"Pull Day","createdAt":"2025-04-14"}]
+                [{"id":1,"name":"Push Day","date":"2025-04-14"},
+                {"id":2,"name":"Pull Day","date":"2025-04-14"}]
                 """
                 )
             )
     }
 
     @Test
-    fun `Update Workout By Id Controller Test`() {
+    fun `Update Workout by Id`() {
 
-        every { workoutService.updateWorkoutById(2, "Morning Routine", LocalDate.of(2025, 4, 12)) } returns RestResponse("True", "Successfully updated Workout with ID: 2 to have name=Morning Routine, createdAt=2025-04-12")
+        every { workoutService.updateWorkoutById(2, "Morning Routine", LocalDate.of(2025, 4, 12)) } returns RestResponse("True", "Successfully updated Workout with ID: 2 to have name=Morning Routine, date=2025-04-12")
 
         mockMvc.perform(put("/api/workout/update?id=2&name=Morning Routine&date=2025-04-12"))
             .andExpect(status().isOk)
@@ -139,14 +138,14 @@ class WorkoutControllerTest(
             .andExpect(
                 content().json(
                     """
-                {"isOk": "True", "reason": "Successfully updated Workout with ID: 2 to have name=Morning Routine, createdAt=2025-04-12"}
+                {"isOk": "True", "reason": "Successfully updated Workout with ID: 2 to have name=Morning Routine, date=2025-04-12"}
                 """
                 )
             )
     }
 
     @Test
-    fun `Delete Workout By Id Controller Test`() {
+    fun `Delete Workout By Id`() {
 
         every { workoutService.deleteWorkoutById(2) } returns RestResponse("True", "Successfully deleted Workout with ID: 2")
 

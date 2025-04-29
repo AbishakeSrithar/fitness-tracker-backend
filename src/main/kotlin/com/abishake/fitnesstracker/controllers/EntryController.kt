@@ -3,9 +3,7 @@ package com.abishake.fitnesstracker.controllers
 import com.abishake.fitnesstracker.models.Entry
 import com.abishake.fitnesstracker.models.RestResponse
 import com.abishake.fitnesstracker.service.EntryService
-import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.web.bind.annotation.*
-import java.time.LocalDate
 import java.util.*
 
 @RestController

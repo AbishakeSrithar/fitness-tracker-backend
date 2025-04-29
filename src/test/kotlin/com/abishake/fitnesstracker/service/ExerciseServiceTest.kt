@@ -1,6 +1,5 @@
 package com.abishake.fitnesstracker.service
 
-import com.abishake.fitnesstracker.models.Entry
 import com.abishake.fitnesstracker.models.Exercise
 import com.abishake.fitnesstracker.models.RestResponse
 import com.abishake.fitnesstracker.repositories.ExerciseRepository
@@ -19,7 +18,7 @@ class ExerciseServiceTest {
     private val exerciseService = ExerciseService(exerciseRepository)
 
     @Test
-    fun createExerciseTest() {
+    fun `Create Exercise`() {
         //setup
         val exercisePreSave = Exercise(id = null, name = "Squat", description = "A lower body exercise targeting the quads, glutes, and hamstrings.")
         val exercisePostSave = Exercise(id = 1, name = "Squat", description = "A lower body exercise targeting the quads, glutes, and hamstrings.")
@@ -34,7 +33,7 @@ class ExerciseServiceTest {
     }
 
     @Test
-    fun getAllExercisesTest() {
+    fun `Get All Exercises`() {
         //setup
         val exercises = listOf(
             Exercise(id = 1, name = "Squat", description = "A lower body exercise targeting the quads, glutes, and hamstrings."),
@@ -51,7 +50,7 @@ class ExerciseServiceTest {
     }
 
     @Test
-    fun getExerciseByIdServiceTest() {
+    fun `Get Exercise by Id`() {
         //setup
         val exercise = Optional.of(Exercise(id = 2, name = "Squat", description = "A lower body exercise targeting the quads, glutes, and hamstrings."))
 
@@ -66,7 +65,7 @@ class ExerciseServiceTest {
     }
 
     @Test
-    fun getExerciseByNameServiceTest() {
+    fun `Get Exercise by Name`() {
         //setup
         val exercise = Optional.of(Exercise(id = 1, name = "Squat", description = "A lower body exercise targeting the quads, glutes, and hamstrings."))
 
@@ -81,7 +80,7 @@ class ExerciseServiceTest {
     }
 
     @Test
-    fun updateExerciseByIdTest() {
+    fun `Update Exercise by Id`() {
         //setup
         val exercisePreUpdate = Exercise(id = 1, name = "Squat", description = "A lower body exercise targeting the quads, glutes, and hamstrings.")
         val exercisePostUpdate = Exercise(id = 1, name = "Back Squat", description = "A lower body exercise targeting the quads, glutes, and hamstrings with bar on your back.")
@@ -100,7 +99,7 @@ class ExerciseServiceTest {
 
     @ParameterizedTest
     @MethodSource("exerciseIdExistsArgs")
-    fun deleteExerciseByIdTest(booleans: Boolean, expected: RestResponse) {
+    fun `Delete Exercise by Id`(booleans: Boolean, expected: RestResponse) {
         //given
         every { exerciseRepository.findById(2).isPresent } returns booleans;
         every { exerciseRepository.deleteById(2) } returns Unit;

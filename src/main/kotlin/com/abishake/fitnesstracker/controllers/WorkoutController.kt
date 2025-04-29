@@ -1,6 +1,5 @@
 package com.abishake.fitnesstracker.controllers
 
-import com.abishake.fitnesstracker.models.Exercise
 import com.abishake.fitnesstracker.models.RestResponse
 import com.abishake.fitnesstracker.models.Workout
 import com.abishake.fitnesstracker.service.WorkoutService

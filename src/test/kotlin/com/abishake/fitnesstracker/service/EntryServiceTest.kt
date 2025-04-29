@@ -1,9 +1,7 @@
 package com.abishake.fitnesstracker.service
 
 import com.abishake.fitnesstracker.models.Entry
-import com.abishake.fitnesstracker.models.Exercise
 import com.abishake.fitnesstracker.models.RestResponse
-import com.abishake.fitnesstracker.models.Workout
 import com.abishake.fitnesstracker.repositories.EntryRepository
 import io.mockk.every
 import io.mockk.mockk
@@ -12,7 +10,6 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
-import java.time.LocalDateTime
 import java.util.*
 import java.util.stream.Stream
 
@@ -21,7 +18,7 @@ class EntryServiceTest {
     private val entryService = EntryService(entryRepository)
 
     @Test
-    fun createEntryTest() {
+    fun `Create Entry`() {
         //setup
         val entryPreSave = Entry(id = null, workoutId = 1, exerciseId = 2, weight = 60.1, sets = 3, reps = 10)
         val entryPostSave = Entry(id = 1, workoutId = 1, exerciseId = 2, weight = 60.1, sets = 3, reps = 10)
@@ -36,7 +33,7 @@ class EntryServiceTest {
     }
 
     @Test
-    fun getAllEntriesTest() {
+    fun `Get All Entries`() {
         //setup
         val entries = listOf(
             Entry(id = 1, workoutId = 1, exerciseId = 1, weight = 60.0, sets = 3, reps = 10),
@@ -53,7 +50,7 @@ class EntryServiceTest {
     }
 
     @Test
-    fun getEntryByIdServiceTest() {
+    fun `Get Entry by Id`() {
         //setup
         val entry = Optional.of(Entry(id = 2, workoutId = 1, exerciseId = 2, weight = 60.0, sets = 4, reps = 8))
 
@@ -68,7 +65,7 @@ class EntryServiceTest {
     }
 
     @Test
-    fun getEntriesByWorkoutIdServiceTest() {
+    fun `Get Entries by Workout Id`() {
         //setup
         val entries = listOf(
             Entry(id = 1, workoutId = 1, exerciseId = 1, weight = 60.0, sets = 3, reps = 10),
@@ -85,7 +82,7 @@ class EntryServiceTest {
     }
 
     @Test
-    fun getEntriesByExerciseIdServiceTest() {
+    fun `Get Entries by Exercise Id`() {
         //setup
         val entries = listOf(
             Entry(id = 1, workoutId = 1, exerciseId = 2, weight = 60.0, sets = 3, reps = 10),
@@ -102,7 +99,7 @@ class EntryServiceTest {
     }
 
     @Test
-    fun updateEntryByIdTest() {
+    fun `Update Entry by Id`() {
         //setup
         val entryPreUpdate = Entry(id = 2, workoutId = 1, exerciseId = 2, weight = 60.1, sets = 3, reps = 10)
         val entryPostUpdate = Entry(id = 2, workoutId = 1, exerciseId = 2, weight = 75.1, sets = 5, reps = 12)
@@ -121,7 +118,7 @@ class EntryServiceTest {
 
     @ParameterizedTest
     @MethodSource("entryIdExistsArgs")
-    fun deleteEntryByIdTest(booleans: Boolean, expected: RestResponse) {
+    fun `Delete Entry by Id`(booleans: Boolean, expected: RestResponse) {
         //given
         every { entryRepository.findById(2).isPresent } returns booleans;
         every { entryRepository.deleteById(2) } returns Unit;

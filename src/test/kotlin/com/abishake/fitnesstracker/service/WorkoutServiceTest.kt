@@ -1,6 +1,5 @@
 package com.abishake.fitnesstracker.service
 
-import com.abishake.fitnesstracker.models.Entry
 import com.abishake.fitnesstracker.models.RestResponse
 import com.abishake.fitnesstracker.models.Workout
 import com.abishake.fitnesstracker.repositories.WorkoutRepository
@@ -21,11 +20,11 @@ class WorkoutServiceTest {
     private val workoutService = WorkoutService(workoutsRepository)
 
     @Test
-    fun createWorkoutTest() {
+    fun `Create Workout`() {
         //setup
         val date = LocalDate.of(2025, 4, 14)
-        val workoutPreSave = Workout(id = null, name = "Pull Day", createdAt = date)
-        val workoutPostSave = Workout(id = 2, name = "Pull Day", createdAt = date)
+        val workoutPreSave = Workout(id = null, name = "Pull Day", date = date)
+        val workoutPostSave = Workout(id = 2, name = "Pull Day", date = date)
         //given
         every { workoutsRepository.saveAndFlush(workoutPreSave) } returns workoutPostSave
 
@@ -37,12 +36,12 @@ class WorkoutServiceTest {
     }
 
     @Test
-    fun getAllWorkoutsServiceTest() {
+    fun `Get All Workouts`() {
         //setup
         val workouts = listOf(
-            Workout(id = 1, name = "Push Day", createdAt = LocalDate.of(2025, 4, 14)),
-            Workout(id = 2, name = "Pull Day", createdAt = LocalDate.of(2025, 4, 15)),
-            Workout(id = 3, name = "Leg Day", createdAt = LocalDate.of(2025, 4, 16))
+            Workout(id = 1, name = "Push Day", date = LocalDate.of(2025, 4, 14)),
+            Workout(id = 2, name = "Pull Day", date = LocalDate.of(2025, 4, 15)),
+            Workout(id = 3, name = "Leg Day", date = LocalDate.of(2025, 4, 16))
         )
 
         //given
@@ -56,9 +55,9 @@ class WorkoutServiceTest {
     }
 
     @Test
-    fun getWorkoutByIdServiceTest() {
+    fun `Get Workout by Id`() {
         //setup
-        val workout = Optional.of(Workout(id = 2, name = "Pull Day", createdAt = LocalDate.of(2025, 4, 14)))
+        val workout = Optional.of(Workout(id = 2, name = "Pull Day", date = LocalDate.of(2025, 4, 14)))
 
         //given
         every { workoutsRepository.findById(2) } returns workout
@@ -71,10 +70,10 @@ class WorkoutServiceTest {
     }
 
     @Test
-    fun getWorkoutByNameServiceTest() {
+    fun `Get Workouts by Name`() {
         //setup
-        val workout1 = Workout(id = 2, name = "Pull Day", createdAt = LocalDate.of(2025, 4, 14))
-        val workout2 = Workout(id = 7, name = "Pull Day", createdAt = LocalDate.of(2025, 4, 22))
+        val workout1 = Workout(id = 2, name = "Pull Day", date = LocalDate.of(2025, 4, 14))
+        val workout2 = Workout(id = 7, name = "Pull Day", date = LocalDate.of(2025, 4, 22))
 
         //given
         every { workoutsRepository.findByName("Pull Day") } returns arrayListOf(workout1, workout2)
@@ -87,12 +86,12 @@ class WorkoutServiceTest {
     }
 
     @Test
-    fun getWorkoutByDateServiceTest() {
+    fun `Get Workouts by Date`() {
         //setup
-        val workout2 = Workout(id = 7, name = "Pull Day", createdAt = LocalDate.of(2025, 4, 22))
+        val workout2 = Workout(id = 7, name = "Pull Day", date = LocalDate.of(2025, 4, 22))
 
         //given
-        every { workoutsRepository.findByCreatedAt(LocalDate.of(2025, 4, 22)) } returns arrayListOf(workout2)
+        every { workoutsRepository.findByDate(LocalDate.of(2025, 4, 22)) } returns arrayListOf(workout2)
 
         //when
         val result = workoutService.getWorkoutByDate(LocalDate.of(2025, 4, 22))
@@ -102,13 +101,13 @@ class WorkoutServiceTest {
     }
 
     @Test
-    fun updateWorkoutByIdTest() {
+    fun `Update Workout by Id`() {
         //setup
         val datePreUpdate = LocalDate.of(2025, 4, 14)
         val datePostUpdate = LocalDate.of(2024, 5, 22)
-        val workoutPreUpdate = Workout(id = 2, name = "Pull Day", createdAt = datePreUpdate)
-        val workoutPostUpdate = Workout(id = 2, name = "Pull + Push Day", createdAt = datePostUpdate)
-        val expectedRes = RestResponse("True", "Successfully updated Workout with ID: 2 to have name=Pull + Push Day, createdAt=2024-05-22")
+        val workoutPreUpdate = Workout(id = 2, name = "Pull Day", date = datePreUpdate)
+        val workoutPostUpdate = Workout(id = 2, name = "Pull + Push Day", date = datePostUpdate)
+        val expectedRes = RestResponse("True", "Successfully updated Workout with ID: 2 to have name=Pull + Push Day, date=2024-05-22")
 
         //given
         every { workoutsRepository.findById(2) } returns Optional.of(workoutPreUpdate);
@@ -123,7 +122,7 @@ class WorkoutServiceTest {
 
     @ParameterizedTest
     @MethodSource("workoutIdExistsArgs")
-    fun deleteWorkoutByIdTest(booleans: Boolean, expected: RestResponse) {
+    fun `Delete Workout by Id`(booleans: Boolean, expected: RestResponse) {
         //given
         every { workoutsRepository.findById(2).isPresent } returns booleans
         every { workoutsRepository.deleteById(2) } returns Unit

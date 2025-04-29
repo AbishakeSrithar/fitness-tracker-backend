@@ -12,9 +12,9 @@ class WorkoutService(
     private val workoutRepository: WorkoutRepository
 ) {
     // CREATE
-    fun createWorkout(name: String, createdAt: LocalDate = LocalDate.now()): Workout {
+    fun createWorkout(name: String, date: LocalDate = LocalDate.now()): Workout {
         return workoutRepository.saveAndFlush(
-            Workout(null, name, createdAt)
+            Workout(null, name, date)
         )
     }
 
@@ -32,7 +32,7 @@ class WorkoutService(
     }
 
     fun getWorkoutByDate(date: LocalDate): List<Workout> {
-        return workoutRepository.findByCreatedAt(date)
+        return workoutRepository.findByDate(date)
     }
 
     //  UPDATE
@@ -40,11 +40,11 @@ class WorkoutService(
         if (getWorkoutById(id).isPresent) {
             val workout = getWorkoutById(id).get()
             workout.name = name
-            workout.createdAt = date
+            workout.date = date
 
             try {
                 workoutRepository.saveAndFlush(workout)
-                return RestResponse("True", "Successfully updated Workout with ID: $id to have name=$name, createdAt=$date")
+                return RestResponse("True", "Successfully updated Workout with ID: $id to have name=$name, date=$date")
             } catch (e: Exception) {
                 return RestResponse("False", "Error while updating Workout with ID: $id")
             }

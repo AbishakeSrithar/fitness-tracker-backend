@@ -1,6 +1,5 @@
 package com.abishake.fitnesstracker.service
 
-import com.abishake.fitnesstracker.models.Entry
 import com.abishake.fitnesstracker.models.Exercise
 import com.abishake.fitnesstracker.models.RestResponse
 import com.abishake.fitnesstracker.repositories.ExerciseRepository

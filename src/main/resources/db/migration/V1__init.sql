@@ -7,7 +7,7 @@ CREATE TABLE "exercises" (
 CREATE TABLE "workouts" (
   "id" serial PRIMARY KEY,
   "name" varchar,
-  "created_at" timestamp
+  "date" timestamp
 );
 
 CREATE TABLE "entries" (
