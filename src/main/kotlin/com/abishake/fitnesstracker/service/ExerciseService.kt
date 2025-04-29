@@ -1,7 +1,6 @@
 package com.abishake.fitnesstracker.service
 
 import com.abishake.fitnesstracker.models.Exercise
-import com.abishake.fitnesstracker.models.RestResponse
 import com.abishake.fitnesstracker.repositories.ExerciseRepository
 import org.springframework.stereotype.Service
 import java.util.*
@@ -10,6 +9,9 @@ import java.util.*
 class ExerciseService(
     private val exerciseRepository: ExerciseRepository
 ) {
+
+    private val className = ExerciseService::class
+
     // CREATE
     fun createExercise(name: String, description: String): Exercise {
         return exerciseRepository.saveAndFlush(
@@ -22,8 +24,12 @@ class ExerciseService(
         return exerciseRepository.findAll()
     }
 
-    fun getExerciseById(id: Long): Optional<Exercise> {
-        return exerciseRepository.findById(id)
+    fun getExerciseById(id: Long): Exercise {
+        if (exerciseRepository.findById(id).isPresent) {
+            return exerciseRepository.findById(id).get()
+        } else {
+            throw Exception("Exercise Id = $id not found for getExerciseById() >> $className")
+        }
     }
 
     fun getExerciseByName(name: String): Optional<Exercise> {
@@ -31,30 +37,22 @@ class ExerciseService(
     }
 
     //  UPDATE
-    fun updateExerciseById(id: Long, name: String, description: String): RestResponse {
-        if (getExerciseById(id).isPresent) {
-            val exercise = getExerciseById(id).get()
+    fun updateExerciseById(id: Long, name: String, description: String): Exercise {
+        try {
+            val exercise = getExerciseById(id)
             exercise.name = name
             exercise.description = description
 
-            try {
-                exerciseRepository.saveAndFlush(exercise)
-                return RestResponse("True", "Successfully updated Exercise with ID: $id to have name=$name, description=$description")
-            } catch (e: Exception) {
-                return RestResponse("False", "Error while updating Exercise with ID: $id")
-            }
-        } else {
-            return RestResponse("False", "Cannot find Exercise with ID: $id to update")
+            exerciseRepository.saveAndFlush(exercise)
+            return exercise
+        } catch (e: Exception) {
+            throw Exception("Exception in updateExerciseById() >> $className", e)
         }
     }
 
     // DELETE
-    fun deleteExerciseById(id: Long): RestResponse {
-        if (exerciseRepository.findById(id).isPresent) {
-            exerciseRepository.deleteById(id)
-            return RestResponse("True", "Successfully deleted Exercise with ID: $id")
-        } else {
-            return RestResponse("False", "Exercise ID: $id not found")
-        }
+    fun deleteExerciseById(id: Long) {
+        getExerciseById(id)
+        exerciseRepository.deleteById(id)
     }
 }

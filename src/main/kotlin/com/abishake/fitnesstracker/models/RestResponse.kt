@@ -1,6 +1,7 @@
 package com.abishake.fitnesstracker.models
 
-data class RestResponse(
-    val isOk: String,
-    val reason: String
+data class RestResponse<T>(
+    val success: Boolean,
+    val info: String,
+    val payload: T
 )
