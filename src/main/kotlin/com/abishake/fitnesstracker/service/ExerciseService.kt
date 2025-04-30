@@ -3,7 +3,6 @@ package com.abishake.fitnesstracker.service
 import com.abishake.fitnesstracker.models.Exercise
 import com.abishake.fitnesstracker.repositories.ExerciseRepository
 import org.springframework.stereotype.Service
-import java.util.*
 
 @Service
 class ExerciseService(
@@ -32,8 +31,12 @@ class ExerciseService(
         }
     }
 
-    fun getExerciseByName(name: String): Optional<Exercise> {
-        return exerciseRepository.findByName(name)
+    fun getExerciseByName(name: String): Exercise {
+        if (exerciseRepository.findByName(name).isPresent) {
+            return exerciseRepository.findByName(name).get()
+        } else {
+            throw Exception("Exercise Name = $name not found for getExerciseByName() >> $className")
+        }
     }
 
     //  UPDATE
@@ -53,6 +56,10 @@ class ExerciseService(
     // DELETE
     fun deleteExerciseById(id: Long) {
         getExerciseById(id)
-        exerciseRepository.deleteById(id)
+        try {
+            exerciseRepository.deleteById(id)
+        } catch (e: Exception) {
+            throw Exception("Exception in deleteExerciseById() >> $className", e)
+        }
     }
 }

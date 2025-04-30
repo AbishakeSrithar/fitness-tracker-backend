@@ -115,7 +115,7 @@ class EntryController(
         @RequestParam("id") id: Long
     ): RestResponse<String> {
         try {
-            val payload = entryService.deleteEntryById(id)
+            entryService.deleteEntryById(id)
             return RestResponse(true, "Delete Entry by Id", "Deleted Id: $id")
     } catch (e: Exception) {
         throw Exception("Exception in deleteEntryById() >> $className", e)

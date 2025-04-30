@@ -62,7 +62,7 @@ class ExerciseController(
         value = ["/name"],
         produces = ["application/json"]
     )
-    fun getExerciseByName(@RequestParam("name") name: String): RestResponse<Optional<Exercise>>{
+    fun getExerciseByName(@RequestParam("name") name: String): RestResponse<Exercise>{
         try {
             val payload = exerciseService.getExerciseByName(name)
             return RestResponse(true, "Get Exercise by Name", payload)
@@ -98,7 +98,7 @@ class ExerciseController(
         @RequestParam("id") id: Long
     ): RestResponse<String> {
         try {
-            val payload = exerciseService.deleteExerciseById(id)
+            exerciseService.deleteExerciseById(id)
             return RestResponse(true, "Delete Exercise by Id", "Deleted Id: $id")
         } catch (e: Exception) {
             throw Exception("Exception in deleteExerciseById() >> $className", e)

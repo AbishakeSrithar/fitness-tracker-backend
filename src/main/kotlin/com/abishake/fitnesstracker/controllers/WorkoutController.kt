@@ -23,7 +23,7 @@ class WorkoutController(
     )
     fun createWorkout(
         @RequestParam("name") name: String,
-        @RequestParam("date", required = false) @DateTimeFormat(pattern = "dd/MM/yyyy") date: Optional<LocalDate>
+        @RequestParam("date") @DateTimeFormat(pattern = "dd/MM/yyyy") date: Optional<LocalDate>
     ): RestResponse<Workout> {
         try {
             val payload =  if (date.isPresent) workoutService.createWorkout(name, date.get()) else workoutService.createWorkout(name)
@@ -115,7 +115,7 @@ class WorkoutController(
         @RequestParam("id") id: Long
     ): RestResponse<String> {
         try {
-            val payload =  workoutService.deleteWorkoutById(id)
+            workoutService.deleteWorkoutById(id)
             return RestResponse(true, "Delete Workout by Id", "Deleted Id: $id")
         } catch (e: Exception) {
             throw Exception("Exception in deleteWorkoutById() >> $className", e)

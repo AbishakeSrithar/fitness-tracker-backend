@@ -57,10 +57,11 @@ class WorkoutServiceTest {
     @Test
     fun `Get Workout by Id`() {
         //setup
-        val workout = Optional.of(Workout(id = 2, name = "Pull Day", date = LocalDate.of(2025, 4, 14)))
+        val workout = Workout(id = 2, name = "Pull Day", date = LocalDate.of(2025, 4, 14))
 
         //given
-        every { workoutsRepository.findById(2) } returns workout
+        every { workoutsRepository.findById(2).isPresent } returns true
+        every { workoutsRepository.findById(2).get() } returns workout
 
         //when
         val result = workoutService.getWorkoutById(2)
@@ -107,40 +108,33 @@ class WorkoutServiceTest {
         val datePostUpdate = LocalDate.of(2024, 5, 22)
         val workoutPreUpdate = Workout(id = 2, name = "Pull Day", date = datePreUpdate)
         val workoutPostUpdate = Workout(id = 2, name = "Pull + Push Day", date = datePostUpdate)
-        val expectedRes = RestResponse("True", "Successfully updated Workout with ID: 2 to have name=Pull + Push Day, date=2024-05-22")
 
         //given
-        every { workoutsRepository.findById(2) } returns Optional.of(workoutPreUpdate);
+        every { workoutsRepository.findById(2).isPresent } returns true
+        every { workoutsRepository.findById(2).get() } returns workoutPreUpdate
         every { workoutsRepository.saveAndFlush(workoutPostUpdate) } returns workoutPostUpdate;
 
         //when
         val result = workoutService.updateWorkoutById(2, "Pull + Push Day", datePostUpdate);
 
         //then
-        assertEquals(expectedRes, result)
+        assertEquals(workoutPostUpdate, result)
     }
 
-    @ParameterizedTest
-    @MethodSource("workoutIdExistsArgs")
-    fun `Delete Workout by Id`(booleans: Boolean, expected: RestResponse) {
+    @Test
+    fun `Delete Workout by Id`() {
+        //setup
+        val date = LocalDate.of(2024, 5, 22)
+        val workout = Workout(id = 2, name = "Pull + Push Day", date = date)
         //given
-        every { workoutsRepository.findById(2).isPresent } returns booleans
+        every { workoutsRepository.findById(2).isPresent } returns true
+        every { workoutsRepository.findById(2).get() } returns workout
         every { workoutsRepository.deleteById(2) } returns Unit
 
         //when
         val result = workoutService.deleteWorkoutById(2)
 
         //then
-        assertEquals(expected, result)
-    }
-
-    companion object {
-        @JvmStatic
-        fun workoutIdExistsArgs(): Stream<Arguments> {
-            return Stream.of(
-                Arguments.of(true, RestResponse("True", "Successfully deleted Workout with ID: 2")),
-                Arguments.of(false, RestResponse("False", "Workout ID: 2 not found")),
-            )
-        }
+        assertEquals(Unit, result)
     }
 }

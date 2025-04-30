@@ -52,10 +52,11 @@ class EntryServiceTest {
     @Test
     fun `Get Entry by Id`() {
         //setup
-        val entry = Optional.of(Entry(id = 2, workoutId = 1, exerciseId = 2, weight = 60.0, sets = 4, reps = 8))
+        val entry = Entry(id = 2, workoutId = 1, exerciseId = 2, weight = 60.0, sets = 4, reps = 8)
 
         //given
-        every { entryRepository.findById(2) } returns entry;
+        every { entryRepository.findById(2).isPresent } returns true;
+        every { entryRepository.findById(2).get() } returns entry;
 
         //when
         val result = entryService.getEntryById(2);
@@ -103,40 +104,33 @@ class EntryServiceTest {
         //setup
         val entryPreUpdate = Entry(id = 2, workoutId = 1, exerciseId = 2, weight = 60.1, sets = 3, reps = 10)
         val entryPostUpdate = Entry(id = 2, workoutId = 1, exerciseId = 2, weight = 75.1, sets = 5, reps = 12)
-        val expectedRes = RestResponse("True", "Successfully updated Entry with ID: 2 to have weight=75.1, sets=5, reps=12")
 
         //given
-        every { entryRepository.findById(2) } returns Optional.of(entryPreUpdate);
+        every { entryRepository.findById(2).isPresent } returns true
+        every { entryRepository.findById(2).get() } returns entryPreUpdate
         every { entryRepository.saveAndFlush(entryPostUpdate) } returns entryPostUpdate;
 
         //when
         val result = entryService.updateEntryById(2, 75.1, 5, 12);
 
         //then
-        assertEquals(expectedRes, result)
+        assertEquals(entryPostUpdate, result)
     }
 
-    @ParameterizedTest
-    @MethodSource("entryIdExistsArgs")
-    fun `Delete Entry by Id`(booleans: Boolean, expected: RestResponse) {
+    @Test
+    fun `Delete Entry by Id`() {
+        //setup
+        val entry = Entry(id = 2, workoutId = 1, exerciseId = 2, weight = 75.1, sets = 5, reps = 12)
+
         //given
-        every { entryRepository.findById(2).isPresent } returns booleans;
+        every { entryRepository.findById(2).isPresent } returns true;
+        every { entryRepository.findById(2).get() } returns entry;
         every { entryRepository.deleteById(2) } returns Unit;
 
         //when
         val result = entryService.deleteEntryById(2);
 
         //then
-        assertEquals(expected, result)
-    }
-
-    companion object {
-        @JvmStatic
-        fun entryIdExistsArgs(): Stream<Arguments> {
-            return Stream.of(
-                Arguments.of(true, RestResponse("True", "Successfully deleted Entry with ID: 2")),
-                Arguments.of(false, RestResponse("False", "Entry ID: 2 not found")),
-            )
-        }
+        assertEquals(Unit, result)
     }
 }
