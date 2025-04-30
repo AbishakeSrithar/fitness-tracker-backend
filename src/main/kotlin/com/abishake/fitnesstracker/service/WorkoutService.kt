@@ -32,11 +32,11 @@ class WorkoutService(
         }
     }
 
-    fun getWorkoutByName(name: String): List<Workout> {
+    fun getWorkoutsByName(name: String): List<Workout> {
         return workoutRepository.findByName(name)
     }
 
-    fun getWorkoutByDate(date: LocalDate): List<Workout> {
+    fun getWorkoutsByDate(date: LocalDate): List<Workout> {
         return workoutRepository.findByDate(date)
     }
 

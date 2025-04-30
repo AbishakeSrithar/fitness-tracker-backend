@@ -64,12 +64,12 @@ class WorkoutController(
         value = ["/name"],
         produces = ["application/json"]
     )
-    fun getWorkoutByName(@RequestParam("name") name: String): RestResponse<List<Workout>> {
+    fun getWorkoutsByName(@RequestParam("name") name: String): RestResponse<List<Workout>> {
         try {
-            val payload =  workoutService.getWorkoutByName(name)
-            return RestResponse(true, "Get Workout by Name", payload)
+            val payload =  workoutService.getWorkoutsByName(name)
+            return RestResponse(true, "Get Workouts by Name", payload)
         } catch (e: Exception) {
-            throw Exception("Exception in getWorkoutByName() >> $className", e)
+            throw Exception("Exception in getWorkoutsByName() >> $className", e)
         }
     }
 
@@ -77,14 +77,14 @@ class WorkoutController(
         value = ["/date"],
         produces = ["application/json"]
     )
-    fun getWorkoutByDate(@RequestParam("date")
+    fun getWorkoutsByDate(@RequestParam("date")
                          @DateTimeFormat(pattern = "dd/MM/yyyy") date: LocalDate
     ): RestResponse<List<Workout>> {
         try {
-            val payload =  workoutService.getWorkoutByDate(date)
-            return RestResponse(true, "Get Workout by Date", payload)
+            val payload =  workoutService.getWorkoutsByDate(date)
+            return RestResponse(true, "Get Workouts by Date", payload)
         } catch (e: Exception) {
-            throw Exception("Exception in getWorkoutByDate() >> $className", e)
+            throw Exception("Exception in getWorkoutsByDate() >> $className", e)
         }
     }
 

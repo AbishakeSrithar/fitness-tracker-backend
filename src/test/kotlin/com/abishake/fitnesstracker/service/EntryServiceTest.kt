@@ -1,17 +1,11 @@
 package com.abishake.fitnesstracker.service
 
 import com.abishake.fitnesstracker.models.Entry
-import com.abishake.fitnesstracker.models.RestResponse
 import com.abishake.fitnesstracker.repositories.EntryRepository
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.Arguments
-import org.junit.jupiter.params.provider.MethodSource
-import java.util.*
-import java.util.stream.Stream
 
 class EntryServiceTest {
     private val entryRepository: EntryRepository = mockk()

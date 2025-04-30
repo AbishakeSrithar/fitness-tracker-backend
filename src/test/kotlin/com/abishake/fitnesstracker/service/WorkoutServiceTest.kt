@@ -1,18 +1,12 @@
 package com.abishake.fitnesstracker.service
 
-import com.abishake.fitnesstracker.models.RestResponse
 import com.abishake.fitnesstracker.models.Workout
 import com.abishake.fitnesstracker.repositories.WorkoutRepository
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.Arguments
-import org.junit.jupiter.params.provider.MethodSource
 import java.time.LocalDate
-import java.util.*
-import java.util.stream.Stream
 
 
 class WorkoutServiceTest {
@@ -80,7 +74,7 @@ class WorkoutServiceTest {
         every { workoutsRepository.findByName("Pull Day") } returns arrayListOf(workout1, workout2)
 
         //when
-        val result = workoutService.getWorkoutByName("Pull Day")
+        val result = workoutService.getWorkoutsByName("Pull Day")
 
         //then
         assertEquals(arrayListOf(workout1, workout2), result)
@@ -95,7 +89,7 @@ class WorkoutServiceTest {
         every { workoutsRepository.findByDate(LocalDate.of(2025, 4, 22)) } returns arrayListOf(workout2)
 
         //when
-        val result = workoutService.getWorkoutByDate(LocalDate.of(2025, 4, 22))
+        val result = workoutService.getWorkoutsByDate(LocalDate.of(2025, 4, 22))
 
         //then
         assertEquals(arrayListOf(workout2), result)
