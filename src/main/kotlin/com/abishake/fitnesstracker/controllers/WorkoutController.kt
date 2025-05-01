@@ -10,6 +10,7 @@ import java.util.*
 
 @RestController
 @RequestMapping("/api/workout")
+@CrossOrigin
 class WorkoutController(
     private val workoutService: WorkoutService,
 ) {

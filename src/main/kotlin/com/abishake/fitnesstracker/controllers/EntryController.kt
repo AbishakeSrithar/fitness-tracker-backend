@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/entry")
+@CrossOrigin
 class EntryController(
     private val entryService: EntryService,
 ) {
