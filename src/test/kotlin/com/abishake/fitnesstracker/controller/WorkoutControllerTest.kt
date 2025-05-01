@@ -25,14 +25,14 @@ class WorkoutControllerTest(
     @Test
     fun `Create Workout`() {
         //setup
-        val date = LocalDate.now()
+        val date = LocalDate.of(2025, 4, 14)
         val workout = Workout(1, name = "Push Day", date = date)
 
         //given
         every { workoutService.createWorkout("Push Day", date) } returns workout
 
         //when
-        mockMvc.perform(post("/api/workout/create?name=Push Day"))
+        mockMvc.perform(post("/api/workout/create?name=Push Day&date=2025-04-14"))
 
         //then
             .andExpect(status().isOk)
@@ -47,7 +47,7 @@ class WorkoutControllerTest(
                         {
                             "id": 1,
                             "name": "Push Day",
-                            "date":"2025-04-30"
+                            "date":"2025-04-14"
                         }
                 }
                 """
