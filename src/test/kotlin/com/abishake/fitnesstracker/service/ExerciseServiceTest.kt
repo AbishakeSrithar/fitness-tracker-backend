@@ -95,16 +95,16 @@ class ExerciseServiceTest {
     @Test
     fun `Delete Exercise by Id`() {
         //setup
-        val exercisePreUpdate = Exercise(id = 1, name = "Squat", description = "A lower body exercise targeting the quads, glutes, and hamstrings.")
+        val exercise = Exercise(id = 1, name = "Squat", description = "A lower body exercise targeting the quads, glutes, and hamstrings.")
         //given
         every { exerciseRepository.findById(2).isPresent } returns true;
-        every { exerciseRepository.findById(2).get() } returns exercisePreUpdate;
+        every { exerciseRepository.findById(2).get() } returns exercise;
         every { exerciseRepository.deleteById(2) } returns Unit;
 
         //when
         val result = exerciseService.deleteExerciseById(2);
 
         //then
-        assertEquals(Unit, result)
+        assertEquals(exercise, result)
     }
 }

@@ -55,8 +55,13 @@ class WorkoutService(
     }
 
     // DELETE
-    fun deleteWorkoutById(id: Long) {
-        getWorkoutById(id)
-        workoutRepository.deleteById(id)
+    fun deleteWorkoutById(id: Long): Workout {
+        val workout = getWorkoutById(id)
+        try {
+            workoutRepository.deleteById(id)
+            return workout
+        } catch (e: Exception) {
+            throw Exception("Exception in deleteWorkoutById() >> $className", e)
+        }
     }
 }

@@ -96,10 +96,10 @@ class ExerciseController(
     )
     fun deleteExerciseById(
         @RequestParam("id") id: Long
-    ): RestResponse<String> {
+    ): RestResponse<Exercise> {
         try {
-            exerciseService.deleteExerciseById(id)
-            return RestResponse(true, "Delete Exercise by Id", "Deleted Id: $id")
+            val payload = exerciseService.deleteExerciseById(id)
+            return RestResponse(true, "Delete Exercise by Id", payload)
         } catch (e: Exception) {
             throw Exception("Exception in deleteExerciseById() >> $className", e)
         }

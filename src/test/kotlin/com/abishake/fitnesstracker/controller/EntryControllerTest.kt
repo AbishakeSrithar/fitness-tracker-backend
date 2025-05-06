@@ -272,9 +272,11 @@ class EntryControllerTest(
     }
 
     @Test
-    fun `Delete Entry By Id Controller`() {
+    fun `Delete Entry By Id Controller`() {//setup
+        val entry = Entry(id = 2, workoutId = 2, exerciseId = 1, weight = 70.0, sets = 5, reps = 12)
+
         //given
-        every { entryService.deleteEntryById(2) } returns Unit
+        every { entryService.deleteEntryById(2) } returns entry
 
         //when
         mockMvc.perform(delete("/api/entry/delete?id=2"))
@@ -288,7 +290,15 @@ class EntryControllerTest(
                 {
                     "success": true,
                     "info": "Delete Entry by Id",
-                    "payload": "Deleted Id: 2"
+                    "payload":
+                        {
+                            "id": 2,
+                            "workoutId": 2,
+                            "exerciseId": 1,
+                            "weight": 70.0,
+                            "sets": 5,
+                            "reps": 12
+                        }
                 }
                 """
                 )

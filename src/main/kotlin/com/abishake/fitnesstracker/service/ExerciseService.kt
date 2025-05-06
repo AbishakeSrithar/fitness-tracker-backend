@@ -54,10 +54,11 @@ class ExerciseService(
     }
 
     // DELETE
-    fun deleteExerciseById(id: Long) {
-        getExerciseById(id)
+    fun deleteExerciseById(id: Long): Exercise {
+        val exercise = getExerciseById(id)
         try {
             exerciseRepository.deleteById(id)
+            return exercise
         } catch (e: Exception) {
             throw Exception("Exception in deleteExerciseById() >> $className", e)
         }

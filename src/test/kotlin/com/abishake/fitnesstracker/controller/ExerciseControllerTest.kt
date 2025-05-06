@@ -214,9 +214,15 @@ class ExerciseControllerTest(
 
     @Test
     fun `Delete Exercise By Id Controller`() {
+        //setup
+        val exercise = Exercise(
+            id = 2,
+            name = "Push Up +",
+            description = "Push up with serratus anterior activation"
+        )
 
         //given
-        every { exerciseService.deleteExerciseById(2) } returns Unit
+        every { exerciseService.deleteExerciseById(2) } returns exercise
 
         //when
         mockMvc.perform(delete("/api/exercise/delete?id=2"))
@@ -230,7 +236,12 @@ class ExerciseControllerTest(
                 {
                     "success": true,
                     "info": "Delete Exercise by Id",
-                    "payload": "Deleted Id: 2"
+                    "payload":
+                        {
+                            "id": 2,
+                            "name": "Push Up +",
+                            "description": "Push up with serratus anterior activation"
+                        }
                 }
                 """
                 )

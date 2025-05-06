@@ -125,6 +125,6 @@ class EntryServiceTest {
         val result = entryService.deleteEntryById(2);
 
         //then
-        assertEquals(Unit, result)
+        assertEquals(entry, result)
     }
 }

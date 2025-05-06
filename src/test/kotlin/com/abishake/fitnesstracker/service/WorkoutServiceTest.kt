@@ -129,6 +129,6 @@ class WorkoutServiceTest {
         val result = workoutService.deleteWorkoutById(2)
 
         //then
-        assertEquals(Unit, result)
+        assertEquals(workout, result)
     }
 }

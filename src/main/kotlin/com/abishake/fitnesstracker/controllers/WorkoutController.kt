@@ -114,10 +114,10 @@ class WorkoutController(
     )
     fun deleteWorkoutById(
         @RequestParam("id") id: Long
-    ): RestResponse<String> {
+    ): RestResponse<Workout> {
         try {
-            workoutService.deleteWorkoutById(id)
-            return RestResponse(true, "Delete Workout by Id", "Deleted Id: $id")
+            val payload =  workoutService.deleteWorkoutById(id)
+            return RestResponse(true, "Delete Workout by Id", payload)
         } catch (e: Exception) {
             throw Exception("Exception in deleteWorkoutById() >> $className", e)
         }

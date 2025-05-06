@@ -56,8 +56,13 @@ class EntryService(
     }
 
     // DELETE
-    fun deleteEntryById(id: Long) {
-        getEntryById(id)
-        entryRepository.deleteById(id)
+    fun deleteEntryById(id: Long): Entry {
+        val entry = getEntryById(id)
+        try {
+            entryRepository.deleteById(id)
+            return entry
+        } catch (e: Exception) {
+            throw Exception("Exception in deleteEntryById() >> $className", e)
+        }
     }
 }

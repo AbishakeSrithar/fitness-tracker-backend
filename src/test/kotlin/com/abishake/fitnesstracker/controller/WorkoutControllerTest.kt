@@ -247,8 +247,11 @@ class WorkoutControllerTest(
 
     @Test
     fun `Delete Workout By Id`() {
+        //setup
+        val workout = Workout(id = 2, name = "Morning Routine", date = LocalDate.of(2025, 4, 12))
+
         //given
-        every { workoutService.deleteWorkoutById(2) } returns Unit
+        every { workoutService.deleteWorkoutById(2) } returns workout
 
         //when
         mockMvc.perform(delete("/api/workout/delete?id=2"))
@@ -262,7 +265,12 @@ class WorkoutControllerTest(
                 {
                     "success": true,
                     "info": "Delete Workout by Id",
-                    "payload": "Deleted Id: 2"
+                    "payload": 
+                        {
+                            "id": 2,
+                            "name": "Morning Routine",
+                            "date":"2025-04-12"
+                        }
                 }
                 """
                 )
