@@ -42,11 +42,13 @@ class ExerciseControllerTest(
                     "success": true,
                     "info": "Create Exercise",
                     "payload":
+                        [
                         {
                             "id": 1,
                             "name": "Deadlift",
                             "description": "Die by lifting"
                         }
+                        ]
                 }
                 """
                 )
@@ -129,11 +131,13 @@ class ExerciseControllerTest(
                     "success": true,
                     "info": "Get Exercise by Id",
                     "payload":
+                        [
                         {
                             "id": 2,
                             "name": "Bench Press",
                             "description": "A chest exercise that targets the pectorals, shoulders, and triceps."
                         }
+                        ]
                 }
                 """
                 )
@@ -165,11 +169,13 @@ class ExerciseControllerTest(
                     "success": true,
                     "info": "Get Exercise by Name",
                     "payload":
+                        [
                         {
                             "id": 2,
                             "name": "Bench Press",
                             "description": "A chest exercise that targets the pectorals, shoulders, and triceps."
                         }
+                        ]
                 }
                 """
                 )
@@ -201,11 +207,13 @@ class ExerciseControllerTest(
                     "success": true,
                     "info": "Update Exercise by Id",
                     "payload":
+                        [
                         {
                             "id": 2,
                             "name": "Push Up +",
                             "description": "Push up with serratus anterior activation"
                         }
+                        ]
                 }
                 """
                 )
@@ -237,11 +245,13 @@ class ExerciseControllerTest(
                     "success": true,
                     "info": "Delete Exercise by Id",
                     "payload":
+                        [
                         {
                             "id": 2,
                             "name": "Push Up +",
                             "description": "Push up with serratus anterior activation"
                         }
+                        ]
                 }
                 """
                 )

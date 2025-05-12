@@ -44,11 +44,13 @@ class WorkoutControllerTest(
                     "success": true,
                     "info": "Create Workout",
                     "payload":
+                        [
                         {
                             "id": 1,
                             "name": "Push Day",
                             "date":"2025-04-14"
                         }
+                        ]
                 }
                 """
                 )
@@ -118,11 +120,13 @@ class WorkoutControllerTest(
                     "success": true,
                     "info": "Get Workout by Id",
                     "payload":
+                        [
                         {
                             "id": 2,
                             "name": "Pull Day",
                             "date":"2025-04-15"
                         }
+                        ]
                 }
                 """
                 )
@@ -234,11 +238,13 @@ class WorkoutControllerTest(
                     "success": true,
                     "info": "Update Workout by Id",
                     "payload":
+                        [
                         {
                             "id": 2,
                             "name": "Morning Routine",
                             "date":"2025-04-12"
                         }
+                        ]
                 }
                 """
                 )
@@ -266,11 +272,13 @@ class WorkoutControllerTest(
                     "success": true,
                     "info": "Delete Workout by Id",
                     "payload": 
+                        [
                         {
                             "id": 2,
                             "name": "Morning Routine",
                             "date":"2025-04-12"
                         }
+                        ]
                 }
                 """
                 )

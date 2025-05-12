@@ -42,6 +42,7 @@ class EntryControllerTest(
                     "success": true,
                     "info": "Create Entry",
                     "payload": 
+                        [
                         {
                             "id": 1,
                             "workoutId": 2,
@@ -50,6 +51,7 @@ class EntryControllerTest(
                             "sets": 4,
                             "reps": 10
                         }
+                        ]
                 }
                 """
                 )
@@ -126,6 +128,7 @@ class EntryControllerTest(
                     "success": true,
                     "info": "Get Entry by Id",
                     "payload":
+                        [
                         {
                             "id": 1,
                             "workoutId": 1,
@@ -134,6 +137,7 @@ class EntryControllerTest(
                             "sets": 3,
                             "reps": 10
                         }
+                        ]
                 }
                 """
                 )
@@ -257,6 +261,7 @@ class EntryControllerTest(
                 "success": true,
                 "info": "Update Entry by Id",
                 "payload":
+                    [
                     {
                         "id": 2,
                         "workoutId": 2,
@@ -265,6 +270,7 @@ class EntryControllerTest(
                         "sets": 5,
                         "reps": 12
                     }
+                    ]
                 }
                 """
                 )
@@ -291,6 +297,7 @@ class EntryControllerTest(
                     "success": true,
                     "info": "Delete Entry by Id",
                     "payload":
+                        [
                         {
                             "id": 2,
                             "workoutId": 2,
@@ -299,6 +306,7 @@ class EntryControllerTest(
                             "sets": 5,
                             "reps": 12
                         }
+                        ]
                 }
                 """
                 )

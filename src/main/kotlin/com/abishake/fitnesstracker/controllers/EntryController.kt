@@ -25,10 +25,10 @@ class EntryController(
         @RequestParam("weight") weight: Double,
         @RequestParam("sets") sets: Int,
         @RequestParam("reps") reps: Int
-    ): RestResponse<Entry> {
+    ): RestResponse<List<Entry>> {
         try {
             val payload = entryService.createEntry(workoutId, exerciseId, weight, sets, reps)
-            return RestResponse(true, "Create Entry", payload)
+            return RestResponse(true, "Create Entry",  listOf(payload))
         } catch (e: Exception) {
             throw Exception("Exception in createEntry() >> $className", e)
         }
@@ -53,10 +53,10 @@ class EntryController(
         value = ["/get/byId"],
         produces = ["application/json"]
     )
-    fun getEntryById(@RequestParam("id") id: Long): RestResponse<Entry> {
+    fun getEntryById(@RequestParam("id") id: Long): RestResponse<List<Entry>> {
         try {
             val payload = entryService.getEntryById(id)
-            return RestResponse(true, "Get Entry by Id", payload)
+            return RestResponse(true, "Get Entry by Id", listOf(payload))
         } catch (e: Exception) {
             throw Exception("Exception in getEntryById() >> $className", e)
         }
@@ -98,10 +98,10 @@ class EntryController(
         @RequestParam("weight") weight: Double,
         @RequestParam("sets") sets: Int,
         @RequestParam("reps") reps: Int
-    ): RestResponse<Entry> {
+    ): RestResponse<List<Entry>> {
         try {
             val payload = entryService.updateEntryById(id, weight, sets, reps)
-            return RestResponse(true, "Update Entry by Id", payload)
+            return RestResponse(true, "Update Entry by Id", listOf(payload))
         } catch (e: Exception) {
             throw Exception("Exception in updateEntryById() >> $className", e)
         }
@@ -114,10 +114,10 @@ class EntryController(
     )
     fun deleteEntryById(
         @RequestParam("id") id: Long
-    ): RestResponse<Entry> {
+    ): RestResponse<List<Entry>> {
         try {
             val payload = entryService.deleteEntryById(id)
-            return RestResponse(true, "Delete Entry by Id", payload)
+            return RestResponse(true, "Delete Entry by Id", listOf(payload))
     } catch (e: Exception) {
         throw Exception("Exception in deleteEntryById() >> $className", e)
     }

@@ -25,10 +25,10 @@ class WorkoutController(
     fun createWorkout(
         @RequestParam("name") name: String,
         @RequestParam("date") @DateTimeFormat(pattern = "dd/MM/yyyy") date: Optional<LocalDate>
-    ): RestResponse<Workout> {
+    ): RestResponse<List<Workout>> {
         try {
             val payload =  if (date.isPresent) workoutService.createWorkout(name, date.get()) else workoutService.createWorkout(name)
-            return RestResponse(true, "Create Workout", payload)
+            return RestResponse(true, "Create Workout", listOf(payload))
         } catch (e: Exception) {
             throw Exception("Exception in createWorkout() >> $className", e)
         }
@@ -52,10 +52,10 @@ class WorkoutController(
         value = ["/id"],
         produces = ["application/json"]
     )
-    fun getWorkoutById(@RequestParam("id") id: Long): RestResponse<Workout> {
+    fun getWorkoutById(@RequestParam("id") id: Long): RestResponse<List<Workout>> {
         try {
             val payload =  workoutService.getWorkoutById(id)
-            return RestResponse(true, "Get Workout by Id", payload)
+            return RestResponse(true, "Get Workout by Id", listOf(payload))
         } catch (e: Exception) {
             throw Exception("Exception in getWorkoutById() >> $className", e)
         }
@@ -98,10 +98,10 @@ class WorkoutController(
         @RequestParam("id") id: Long,
         @RequestParam("name") name: String,
         @RequestParam("date") @DateTimeFormat(pattern = "dd/MM/yyyy") date: LocalDate
-    ): RestResponse<Workout> {
+    ): RestResponse<List<Workout>> {
         try {
             val payload =  workoutService.updateWorkoutById(id, name, date)
-            return RestResponse(true, "Update Workout by Id", payload)
+            return RestResponse(true, "Update Workout by Id", listOf(payload))
         } catch (e: Exception) {
             throw Exception("Exception in updateWorkoutById() >> $className", e)
         }
@@ -114,10 +114,10 @@ class WorkoutController(
     )
     fun deleteWorkoutById(
         @RequestParam("id") id: Long
-    ): RestResponse<Workout> {
+    ): RestResponse<List<Workout>> {
         try {
             val payload =  workoutService.deleteWorkoutById(id)
-            return RestResponse(true, "Delete Workout by Id", payload)
+            return RestResponse(true, "Delete Workout by Id", listOf(payload))
         } catch (e: Exception) {
             throw Exception("Exception in deleteWorkoutById() >> $className", e)
         }

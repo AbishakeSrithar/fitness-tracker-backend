@@ -22,10 +22,10 @@ class ExerciseController(
     fun createExercise(
         @RequestParam("name") name: String,
         @RequestParam("description") description: String
-    ): RestResponse<Exercise> {
+    ): RestResponse<List<Exercise>> {
         try {
             val payload = exerciseService.createExercise(name, description)
-            return RestResponse(true, "Create Exercise", payload)
+            return RestResponse(true, "Create Exercise", listOf(payload))
         } catch (e: Exception) {
             throw Exception("Exception in createExercise() >> $className", e)
         }
@@ -49,10 +49,10 @@ class ExerciseController(
         value = ["/id"],
         produces = ["application/json"]
     )
-    fun getExerciseById(@RequestParam("id") id: Long): RestResponse<Exercise> {
+    fun getExerciseById(@RequestParam("id") id: Long): RestResponse<List<Exercise>> {
         try {
             val payload = exerciseService.getExerciseById(id)
-            return RestResponse(true, "Get Exercise by Id", payload)
+            return RestResponse(true, "Get Exercise by Id", listOf(payload))
         } catch (e: Exception) {
             throw Exception("Exception in getExerciseById() >> $className", e)
         }
@@ -62,10 +62,10 @@ class ExerciseController(
         value = ["/name"],
         produces = ["application/json"]
     )
-    fun getExerciseByName(@RequestParam("name") name: String): RestResponse<Exercise>{
+    fun getExerciseByName(@RequestParam("name") name: String): RestResponse<List<Exercise>>{
         try {
             val payload = exerciseService.getExerciseByName(name)
-            return RestResponse(true, "Get Exercise by Name", payload)
+            return RestResponse(true, "Get Exercise by Name", listOf(payload))
         } catch (e: Exception) {
             throw Exception("Exception in getExerciseByName() >> $className", e)
         }
@@ -80,10 +80,10 @@ class ExerciseController(
         @RequestParam("id") id: Long,
         @RequestParam("name") name: String,
         @RequestParam("description") description: String
-    ): RestResponse<Exercise> {
+    ): RestResponse<List<Exercise>> {
         try {
             val payload = exerciseService.updateExerciseById(id, name, description)
-            return RestResponse(true, "Update Exercise by Id", payload)
+            return RestResponse(true, "Update Exercise by Id", listOf(payload))
         } catch (e: Exception) {
             throw Exception("Exception in updateWorkoutById() >> $className", e)
         }
@@ -96,10 +96,10 @@ class ExerciseController(
     )
     fun deleteExerciseById(
         @RequestParam("id") id: Long
-    ): RestResponse<Exercise> {
+    ): RestResponse<List<Exercise>> {
         try {
             val payload = exerciseService.deleteExerciseById(id)
-            return RestResponse(true, "Delete Exercise by Id", payload)
+            return RestResponse(true, "Delete Exercise by Id", listOf(payload))
         } catch (e: Exception) {
             throw Exception("Exception in deleteExerciseById() >> $className", e)
         }
