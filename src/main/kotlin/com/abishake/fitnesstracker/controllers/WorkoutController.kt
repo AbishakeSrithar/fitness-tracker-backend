@@ -49,7 +49,7 @@ class WorkoutController(
     }
 
     @GetMapping(
-        value = ["/id"],
+        value = ["/get/byId"],
         produces = ["application/json"]
     )
     fun getWorkoutById(@RequestParam("id") id: Long): RestResponse<List<Workout>> {
@@ -62,7 +62,7 @@ class WorkoutController(
     }
 
     @GetMapping(
-        value = ["/name"],
+        value = ["/get/byName"],
         produces = ["application/json"]
     )
     fun getWorkoutsByName(@RequestParam("name") name: String): RestResponse<List<Workout>> {
@@ -75,7 +75,7 @@ class WorkoutController(
     }
 
     @GetMapping(
-        value = ["/date"],
+        value = ["/get/byDate"],
         produces = ["application/json"]
     )
     fun getWorkoutsByDate(@RequestParam("date")

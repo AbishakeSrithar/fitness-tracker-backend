@@ -46,7 +46,7 @@ class ExerciseController(
     }
 
     @GetMapping(
-        value = ["/id"],
+        value = ["/get/byId"],
         produces = ["application/json"]
     )
     fun getExerciseById(@RequestParam("id") id: Long): RestResponse<List<Exercise>> {

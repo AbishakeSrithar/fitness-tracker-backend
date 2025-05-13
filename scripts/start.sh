@@ -19,4 +19,4 @@ echo "mvn clean install"
 mvn clean install
 
 echo "docker compose up"
-docker compose up
+docker compose up --build

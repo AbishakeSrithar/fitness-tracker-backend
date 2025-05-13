@@ -6,9 +6,9 @@ INSERT INTO "exercises" ("name", "description") VALUES
 
 -- Insert dummy data into Workouts
 INSERT INTO "workouts" ("name", "date") VALUES
-  ('Push Routine', CURRENT_TIMESTAMP),
-  ('Pull Routine', CURRENT_TIMESTAMP),
-  ('Legs Routine', CURRENT_TIMESTAMP);
+  ('Push Routine', '2025-05-01'),
+  ('Pull Routine', '2025-04-02'),
+  ('Legs Routine', '2024-03-03');
 
 -- Insert dummy data into Entries
 INSERT INTO "entries" ("workout_id", "exercise_id", "weight", "sets", "reps") VALUES

@@ -108,7 +108,7 @@ class WorkoutControllerTest(
         every { workoutService.getWorkoutById(2) } returns workout
 
         //when
-        mockMvc.perform(get("/api/workout/id?id=2"))
+        mockMvc.perform(get("/api/workout/get/byId?id=2"))
 
         //then
             .andExpect(status().isOk)
@@ -145,7 +145,7 @@ class WorkoutControllerTest(
         every { workoutService.getWorkoutsByName("Pull Day") } returns workouts
 
         //when
-        mockMvc.perform(get("/api/workout/name?name=Pull Day"))
+        mockMvc.perform(get("/api/workout/get/byName?name=Pull Day"))
 
         //then
             .andExpect(status().isOk)
@@ -187,7 +187,7 @@ class WorkoutControllerTest(
         every { workoutService.getWorkoutsByDate(LocalDate.of(2025, 4, 14)) } returns workouts
 
         //when
-        mockMvc.perform(get("/api/workout/date?date=14/04/2025"))
+        mockMvc.perform(get("/api/workout/get/byDate?date=14/04/2025"))
 
         //then
             .andExpect(status().isOk)

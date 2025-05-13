@@ -119,7 +119,7 @@ class ExerciseControllerTest(
         every { exerciseService.getExerciseById(2) } returns exercise
 
         //when
-        mockMvc.perform(get("/api/exercise/id?id=2"))
+        mockMvc.perform(get("/api/exercise/get/byId?id=2"))
 
         //then
             .andExpect(status().isOk)
