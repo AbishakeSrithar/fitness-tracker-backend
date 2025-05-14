@@ -157,7 +157,7 @@ class ExerciseControllerTest(
         every { exerciseService.getExerciseByName("Bench Press") } returns exercise
 
         //when
-        mockMvc.perform(get("/api/exercise/name?name=Bench Press"))
+        mockMvc.perform(get("/api/exercise/get/byName?name=Bench Press"))
 
         //then
             .andExpect(status().isOk)

@@ -59,7 +59,7 @@ class ExerciseController(
     }
 
     @GetMapping(
-        value = ["/name"],
+        value = ["/get/byName"],
         produces = ["application/json"]
     )
     fun getExerciseByName(@RequestParam("name") name: String): RestResponse<List<Exercise>>{
