@@ -1,11 +1,14 @@
 # **Fitness Tracker Backend**
-## Setup
+## Start Up
 Run the start.sh file in ./scripts
+``` shell
+./scripts/start.sh 
+```
 
 ## Test
-To run the tests, type
+Run the tests
 ``` shell
-    mvn test
+mvn test
 ```
 
 ## Database Design
