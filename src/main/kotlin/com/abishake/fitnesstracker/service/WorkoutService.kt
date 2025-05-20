@@ -50,7 +50,7 @@ class WorkoutService(
             workoutRepository.saveAndFlush(workout)
             return workout
         } catch (e: Exception) {
-            throw Exception("Exception in updateWorkoutById() >> $className", e)
+            throw Exception("Exception in updateWorkoutById() >> $className \n $e", e)
         }
     }
 

@@ -3,6 +3,7 @@ package com.abishake.fitnesstracker.controllers
 import com.abishake.fitnesstracker.models.Exercise
 import com.abishake.fitnesstracker.models.RestResponse
 import com.abishake.fitnesstracker.service.ExerciseService
+import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -65,7 +66,7 @@ class ExerciseController(
     fun getExerciseByName(@RequestParam("name") name: String): RestResponse<List<Exercise>>{
         try {
             val payload = exerciseService.getExerciseByName(name)
-            return RestResponse(true, "Get Exercise by Name", listOf(payload))
+            return RestResponse(true, "Get Exercise by Name", payload)
         } catch (e: Exception) {
             throw Exception("Exception in getExerciseByName() >> $className", e)
         }
@@ -85,7 +86,7 @@ class ExerciseController(
             val payload = exerciseService.updateExerciseById(id, name, description)
             return RestResponse(true, "Update Exercise by Id", listOf(payload))
         } catch (e: Exception) {
-            throw Exception("Exception in updateWorkoutById() >> $className", e)
+            return RestResponse(false, "Error in Update Exercise by Id: $e", listOf())
         }
     }
 
@@ -100,6 +101,12 @@ class ExerciseController(
         try {
             val payload = exerciseService.deleteExerciseById(id)
             return RestResponse(true, "Delete Exercise by Id", listOf(payload))
+        } catch (e: DataIntegrityViolationException) {
+            return RestResponse(
+                false,
+                "Error in Delete Workout by Id: DataIntegrityViolationException.\n WorkoutId being used in a current Entry, cannot delete.",
+                listOf()
+            )
         } catch (e: Exception) {
             throw Exception("Exception in deleteExerciseById() >> $className", e)
         }

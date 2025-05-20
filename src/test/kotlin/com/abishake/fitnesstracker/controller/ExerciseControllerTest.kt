@@ -154,7 +154,7 @@ class ExerciseControllerTest(
         )
 
         //given
-        every { exerciseService.getExerciseByName("Bench Press") } returns exercise
+        every { exerciseService.getExerciseByName("Bench Press") } returns listOf(exercise)
 
         //when
         mockMvc.perform(get("/api/exercise/get/byName?name=Bench Press"))

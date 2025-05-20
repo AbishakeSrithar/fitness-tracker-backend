@@ -1,6 +1,5 @@
 package com.abishake.fitnesstracker.service
 
-import com.abishake.fitnesstracker.controllers.EntryController
 import com.abishake.fitnesstracker.models.Entry
 import com.abishake.fitnesstracker.repositories.EntryRepository
 import org.springframework.stereotype.Service
@@ -51,7 +50,7 @@ class EntryService(
             entryRepository.saveAndFlush(entry)
             return entry
         } catch (e: Exception) {
-            throw Exception("Exception in updateEntryById() >> $className", e)
+            throw Exception("Exception in updateEntryById() >> $className \n $e", e)
         }
     }
 
@@ -62,7 +61,7 @@ class EntryService(
             entryRepository.deleteById(id)
             return entry
         } catch (e: Exception) {
-            throw Exception("Exception in deleteEntryById() >> $className", e)
+            throw Exception("Exception in deleteEntryById() >> $className \n $e", e)
         }
     }
 }

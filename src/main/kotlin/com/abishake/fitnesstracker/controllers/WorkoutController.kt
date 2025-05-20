@@ -103,7 +103,7 @@ class WorkoutController(
             val payload =  workoutService.updateWorkoutById(id, name, date)
             return RestResponse(true, "Update Workout by Id", listOf(payload))
         } catch (e: Exception) {
-            throw Exception("Exception in updateWorkoutById() >> $className", e)
+            return RestResponse(false, "Error in Update Workout by Id: $e", listOf())
         }
     }
 
@@ -118,8 +118,10 @@ class WorkoutController(
         try {
             val payload =  workoutService.deleteWorkoutById(id)
             return RestResponse(true, "Delete Workout by Id", listOf(payload))
+        } catch (e: org.springframework.dao.DataIntegrityViolationException) {
+            return RestResponse(false, "Error in Delete Workout by Id: DataIntegrityViolationException. WorkoutId being used in a current Entry, cannot delete.", listOf())
         } catch (e: Exception) {
-            throw Exception("Exception in deleteWorkoutById() >> $className", e)
+            throw Exception("Exception in deleteWorkoutById() >> $className \n $e", e)
         }
     }
 }

@@ -2,6 +2,7 @@ package com.abishake.fitnesstracker.service
 
 import com.abishake.fitnesstracker.models.Exercise
 import com.abishake.fitnesstracker.repositories.ExerciseRepository
+import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.stereotype.Service
 
 @Service
@@ -13,9 +14,14 @@ class ExerciseService(
 
     // CREATE
     fun createExercise(name: String, description: String): Exercise {
-        return exerciseRepository.saveAndFlush(
-            Exercise(null, name, description)
-        )
+        val existingEntry = exerciseRepository.findByNameAndDescription(name, description)
+        return if (existingEntry.isEmpty()) {
+            exerciseRepository.saveAndFlush(
+                Exercise(null, name, description)
+            )
+        } else {
+            existingEntry[0]
+        }
     }
 
     // READ
@@ -31,12 +37,8 @@ class ExerciseService(
         }
     }
 
-    fun getExerciseByName(name: String): Exercise {
-        if (exerciseRepository.findByName(name).isPresent) {
-            return exerciseRepository.findByName(name).get()
-        } else {
-            throw Exception("Exercise Name = $name not found for getExerciseByName() >> $className")
-        }
+    fun getExerciseByName(name: String): List<Exercise> {
+            return exerciseRepository.findByName(name)
     }
 
     //  UPDATE
@@ -49,18 +51,14 @@ class ExerciseService(
             exerciseRepository.saveAndFlush(exercise)
             return exercise
         } catch (e: Exception) {
-            throw Exception("Exception in updateExerciseById() >> $className", e)
+            throw Exception("Exception in updateExerciseById() >> $className \n $e", e)
         }
     }
 
     // DELETE
     fun deleteExerciseById(id: Long): Exercise {
         val exercise = getExerciseById(id)
-        try {
-            exerciseRepository.deleteById(id)
-            return exercise
-        } catch (e: Exception) {
-            throw Exception("Exception in deleteExerciseById() >> $className", e)
-        }
+        exerciseRepository.deleteById(id)
+        return exercise
     }
 }

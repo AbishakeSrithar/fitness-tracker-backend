@@ -17,6 +17,7 @@ class ExerciseServiceTest {
         val exercisePreSave = Exercise(id = null, name = "Squat", description = "A lower body exercise targeting the quads, glutes, and hamstrings.")
         val exercisePostSave = Exercise(id = 1, name = "Squat", description = "A lower body exercise targeting the quads, glutes, and hamstrings.")
         //given
+        every { exerciseRepository.findByNameAndDescription(name = "Squat", description = "A lower body exercise targeting the quads, glutes, and hamstrings.") } returns listOf();
         every { exerciseRepository.saveAndFlush(exercisePreSave) } returns exercisePostSave;
 
         //when
@@ -62,11 +63,10 @@ class ExerciseServiceTest {
     @Test
     fun `Get Exercise by Name`() {
         //setup
-        val exercise = Exercise(id = 1, name = "Squat", description = "A lower body exercise targeting the quads, glutes, and hamstrings.")
+        val exercise = listOf(Exercise(id = 1, name = "Squat", description = "A lower body exercise targeting the quads, glutes, and hamstrings."))
 
         //given
-        every { exerciseRepository.findByName("Squat").isPresent } returns true;
-        every { exerciseRepository.findByName("Squat").get() } returns exercise;
+        every { exerciseRepository.findByName("Squat") } returns exercise;
 
         //when
         val result = exerciseService.getExerciseByName("Squat");

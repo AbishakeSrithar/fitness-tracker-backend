@@ -103,7 +103,7 @@ class EntryController(
             val payload = entryService.updateEntryById(id, weight, sets, reps)
             return RestResponse(true, "Update Entry by Id", listOf(payload))
         } catch (e: Exception) {
-            throw Exception("Exception in updateEntryById() >> $className", e)
+            return RestResponse(false, "Error in Update Entry by Id: $e", listOf())
         }
     }
 
@@ -119,7 +119,7 @@ class EntryController(
             val payload = entryService.deleteEntryById(id)
             return RestResponse(true, "Delete Entry by Id", listOf(payload))
     } catch (e: Exception) {
-        throw Exception("Exception in deleteEntryById() >> $className", e)
+            return RestResponse(false, "Error in Delete Entry by Id: $e", listOf())
     }
     }
 }

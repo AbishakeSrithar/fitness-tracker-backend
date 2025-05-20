@@ -33,7 +33,7 @@ Kotlin Tests: https://www.baeldung.com/kotlin/spring-boot-testing
 ![database_design.png](database_design.png)
 
 ## Endpoints for MVP
-TODO
+FindById will error if not found, FindBy anything else will return empty list
 
 ## Resources
 Test Containers: https://jskim1991.medium.com/spring-boot-configure-testcontainers-in-your-test-code-this-way-417b221e55b
