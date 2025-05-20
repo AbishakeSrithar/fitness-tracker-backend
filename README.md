@@ -1,33 +1,15 @@
 # **Fitness Tracker Backend**
-## Setup
-Runs just the db which is required for compiling (else flyway cries)
+## Start Up
+Run the start.sh file in ./scripts
 ``` shell
-    docker compose up db --build
-```
-Compiles our code into .jar file in ```./target```
-``` shell
-    mvn clean install
-```
-Runs our Docker container with the db and app images (created using existing ```.jar```)
-``` shelldocker 
-    docker compose up --build --force-recreate --remove-orphans
-```
-While Docker DB is running, you can access it via shell
-``` shell
-    docker exec -it postgresql psql -U postgres
+./scripts/start.sh 
 ```
 
 ## Test
-To run the tests, make sure you run the db in docker first
+Run the tests
 ``` shell
-    docker compose up db --build
+mvn test
 ```
-then run
-``` shell
-    mvn test
-```
-
-Kotlin Tests: https://www.baeldung.com/kotlin/spring-boot-testing
 
 ## Database Design
 ![database_design.png](database_design.png)
