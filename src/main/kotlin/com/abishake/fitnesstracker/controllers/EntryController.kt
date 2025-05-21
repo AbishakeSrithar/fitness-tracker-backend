@@ -3,7 +3,9 @@ package com.abishake.fitnesstracker.controllers
 import com.abishake.fitnesstracker.models.Entry
 import com.abishake.fitnesstracker.models.RestResponse
 import com.abishake.fitnesstracker.service.EntryService
+import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.web.bind.annotation.*
+import java.util.NoSuchElementException
 
 @RestController
 @RequestMapping("/api/entry")
@@ -28,9 +30,11 @@ class EntryController(
     ): RestResponse<List<Entry>> {
         try {
             val payload = entryService.createEntry(workoutId, exerciseId, weight, sets, reps)
-            return RestResponse(true, "Create Entry",  listOf(payload))
+            return RestResponse(true, "Create Entry",  payload)
+        } catch (e: DataIntegrityViolationException) {
+            return RestResponse(false, "Error in Create Entry: DataIntegrityViolationException. WorkoutId/ExerciseId needs to be created first.", listOf())
         } catch (e: Exception) {
-            throw Exception("Exception in createEntry() >> $className", e)
+            throw Exception("Exception in createEntry() >> $className \n $e", e)
         }
     }
 
@@ -56,7 +60,7 @@ class EntryController(
     fun getEntryById(@RequestParam("id") id: Long): RestResponse<List<Entry>> {
         try {
             val payload = entryService.getEntryById(id)
-            return RestResponse(true, "Get Entry by Id", listOf(payload))
+            return RestResponse(true, "Get Entry by Id", payload)
         } catch (e: Exception) {
             throw Exception("Exception in getEntryById() >> $className", e)
         }
@@ -101,9 +105,11 @@ class EntryController(
     ): RestResponse<List<Entry>> {
         try {
             val payload = entryService.updateEntryById(id, weight, sets, reps)
-            return RestResponse(true, "Update Entry by Id", listOf(payload))
+            return RestResponse(true, "Update Entry by Id", payload)
+        } catch (e: NoSuchElementException) {
+            return RestResponse(false, "Error in Update Entry by Id: Entry Id not found", listOf())
         } catch (e: Exception) {
-            return RestResponse(false, "Error in Update Entry by Id: $e", listOf())
+            throw Exception("Exception in updateEntryById() >> $className", e)
         }
     }
 
@@ -117,9 +123,13 @@ class EntryController(
     ): RestResponse<List<Entry>> {
         try {
             val payload = entryService.deleteEntryById(id)
-            return RestResponse(true, "Delete Entry by Id", listOf(payload))
-    } catch (e: Exception) {
-            return RestResponse(false, "Error in Delete Entry by Id: $e", listOf())
-    }
+            return if (payload.isNotEmpty()) {
+                RestResponse(true, "Delete Entry by Id", payload)
+            } else {
+                RestResponse(false, "Error in Delete Entry by Id: Entry Id not found", listOf())
+            }
+        } catch (e: Exception) {
+            throw Exception("Exception in deleteEntryById() >> $className", e)
+        }
     }
 }

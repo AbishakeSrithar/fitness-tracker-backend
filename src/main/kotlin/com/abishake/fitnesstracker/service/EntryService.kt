@@ -12,10 +12,10 @@ class EntryService(
     private val className = EntryService::class
 
     // CREATE
-    fun createEntry(workoutId: Int, exerciseId: Int, weight: Double, sets: Int, reps: Int): Entry {
-        return entryRepository.saveAndFlush(
+    fun createEntry(workoutId: Int, exerciseId: Int, weight: Double, sets: Int, reps: Int): List<Entry> {
+        return listOf(entryRepository.saveAndFlush(
             Entry(null, workoutId, exerciseId, weight, sets, reps)
-        )
+        ))
     }
 
     // READ
@@ -23,11 +23,11 @@ class EntryService(
         return entryRepository.findAll()
     }
 
-    fun getEntryById(id: Long): Entry {
-        if (entryRepository.findById(id).isPresent) {
-            return entryRepository.findById(id).get()
+    fun getEntryById(id: Long): List<Entry> {
+        return if (entryRepository.findById(id).isPresent) {
+            listOf(entryRepository.findById(id).get())
         } else {
-            throw Exception("Entry Id = $id not found for getEntryById() >> $className")
+            listOf()
         }
     }
 
@@ -40,28 +40,23 @@ class EntryService(
     }
 
     //  UPDATE
-    fun updateEntryById(id: Long, weight: Double, sets: Int, reps: Int): Entry {
-        try {
-            val entry = getEntryById(id)
-            entry.weight = weight
-            entry.sets = sets
-            entry.reps = reps
+    fun updateEntryById(id: Long, weight: Double, sets: Int, reps: Int): List<Entry>  {
+        val entryInList = getEntryById(id)
+        val entry = entryInList.first()
+        entry.weight = weight
+        entry.sets = sets
+        entry.reps = reps
 
-            entryRepository.saveAndFlush(entry)
-            return entry
-        } catch (e: Exception) {
-            throw Exception("Exception in updateEntryById() >> $className \n $e", e)
-        }
+        val saved = entryRepository.saveAndFlush(entry)
+        return listOf(saved)
     }
 
     // DELETE
-    fun deleteEntryById(id: Long): Entry {
+    fun deleteEntryById(id: Long): List<Entry>  {
         val entry = getEntryById(id)
-        try {
+        if (entry.isNotEmpty()) {
             entryRepository.deleteById(id)
-            return entry
-        } catch (e: Exception) {
-            throw Exception("Exception in deleteEntryById() >> $className \n $e", e)
         }
+        return entry
     }
 }

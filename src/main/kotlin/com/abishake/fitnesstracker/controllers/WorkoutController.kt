@@ -3,6 +3,7 @@ package com.abishake.fitnesstracker.controllers
 import com.abishake.fitnesstracker.models.RestResponse
 import com.abishake.fitnesstracker.models.Workout
 import com.abishake.fitnesstracker.service.WorkoutService
+import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDate
@@ -28,7 +29,7 @@ class WorkoutController(
     ): RestResponse<List<Workout>> {
         try {
             val payload =  if (date.isPresent) workoutService.createWorkout(name, date.get()) else workoutService.createWorkout(name)
-            return RestResponse(true, "Create Workout", listOf(payload))
+            return RestResponse(true, "Create Workout", payload)
         } catch (e: Exception) {
             throw Exception("Exception in createWorkout() >> $className", e)
         }
@@ -55,7 +56,7 @@ class WorkoutController(
     fun getWorkoutById(@RequestParam("id") id: Long): RestResponse<List<Workout>> {
         try {
             val payload =  workoutService.getWorkoutById(id)
-            return RestResponse(true, "Get Workout by Id", listOf(payload))
+            return RestResponse(true, "Get Workout by Id", payload)
         } catch (e: Exception) {
             throw Exception("Exception in getWorkoutById() >> $className", e)
         }
@@ -101,9 +102,11 @@ class WorkoutController(
     ): RestResponse<List<Workout>> {
         try {
             val payload =  workoutService.updateWorkoutById(id, name, date)
-            return RestResponse(true, "Update Workout by Id", listOf(payload))
+            return RestResponse(true, "Update Workout by Id", payload)
+        } catch (e: NoSuchElementException) {
+            return RestResponse(false, "Error in Update Workout by Id: Workout Id not found", listOf())
         } catch (e: Exception) {
-            return RestResponse(false, "Error in Update Workout by Id: $e", listOf())
+            throw Exception("Exception in updateWorkoutById() >> $className", e)
         }
     }
 
@@ -117,8 +120,12 @@ class WorkoutController(
     ): RestResponse<List<Workout>> {
         try {
             val payload =  workoutService.deleteWorkoutById(id)
-            return RestResponse(true, "Delete Workout by Id", listOf(payload))
-        } catch (e: org.springframework.dao.DataIntegrityViolationException) {
+            return if (payload.isNotEmpty()) {
+                RestResponse(true, "Delete Workout by Id", payload)
+            } else {
+                RestResponse(false, "Error in Delete Workout by Id: Workout Id not found", listOf())
+            }
+        } catch (e: DataIntegrityViolationException) {
             return RestResponse(false, "Error in Delete Workout by Id: DataIntegrityViolationException. WorkoutId being used in a current Entry, cannot delete.", listOf())
         } catch (e: Exception) {
             throw Exception("Exception in deleteWorkoutById() >> $className \n $e", e)

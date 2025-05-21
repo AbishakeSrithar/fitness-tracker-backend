@@ -24,7 +24,7 @@ class ExerciseServiceTest {
         val result = exerciseService.createExercise("Squat", "A lower body exercise targeting the quads, glutes, and hamstrings.");
 
         //then
-        assertEquals(exercisePostSave, result)
+        assertEquals(listOf(exercisePostSave), result)
     }
 
     @Test
@@ -57,7 +57,7 @@ class ExerciseServiceTest {
         val result = exerciseService.getExerciseById(2)
 
         //then
-        assertEquals(exercise, result)
+        assertEquals(listOf(exercise), result)
     }
 
     @Test
@@ -89,13 +89,13 @@ class ExerciseServiceTest {
         val result = exerciseService.updateExerciseById(1, "Back Squat", "A lower body exercise targeting the quads, glutes, and hamstrings with bar on your back.");
 
         //then
-        assertEquals(exercisePostUpdate, result)
+        assertEquals(listOf(exercisePostUpdate), result)
     }
 
     @Test
     fun `Delete Exercise by Id`() {
         //setup
-        val exercise = Exercise(id = 1, name = "Squat", description = "A lower body exercise targeting the quads, glutes, and hamstrings.")
+        val exercise = Exercise(id = 2, name = "Squat", description = "A lower body exercise targeting the quads, glutes, and hamstrings.")
         //given
         every { exerciseRepository.findById(2).isPresent } returns true;
         every { exerciseRepository.findById(2).get() } returns exercise;
@@ -105,6 +105,6 @@ class ExerciseServiceTest {
         val result = exerciseService.deleteExerciseById(2);
 
         //then
-        assertEquals(exercise, result)
+        assertEquals(listOf(exercise), result)
     }
 }

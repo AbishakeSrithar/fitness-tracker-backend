@@ -26,7 +26,7 @@ class WorkoutServiceTest {
         val result = workoutService.createWorkout("Pull Day", date)
 
         //then
-        assertEquals(workoutPostSave, result)
+        assertEquals(listOf(workoutPostSave), result)
     }
 
     @Test
@@ -61,7 +61,7 @@ class WorkoutServiceTest {
         val result = workoutService.getWorkoutById(2)
 
         //then
-        assertEquals(workout, result)
+        assertEquals(listOf(workout), result)
     }
 
     @Test
@@ -112,7 +112,7 @@ class WorkoutServiceTest {
         val result = workoutService.updateWorkoutById(2, "Pull + Push Day", datePostUpdate);
 
         //then
-        assertEquals(workoutPostUpdate, result)
+        assertEquals(listOf(workoutPostUpdate), result)
     }
 
     @Test
@@ -129,6 +129,6 @@ class WorkoutServiceTest {
         val result = workoutService.deleteWorkoutById(2)
 
         //then
-        assertEquals(workout, result)
+        assertEquals(listOf(workout), result)
     }
 }

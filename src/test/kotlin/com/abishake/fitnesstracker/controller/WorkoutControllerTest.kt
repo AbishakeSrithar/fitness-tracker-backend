@@ -29,7 +29,7 @@ class WorkoutControllerTest(
         val workout = Workout(1, name = "Push Day", date = date)
 
         //given
-        every { workoutService.createWorkout("Push Day", date) } returns workout
+        every { workoutService.createWorkout("Push Day", date) } returns listOf(workout)
 
         //when
         mockMvc.perform(post("/api/workout/create?name=Push Day&date=2025-04-14"))
@@ -105,7 +105,7 @@ class WorkoutControllerTest(
         val workout = Workout(id = 2, name = "Pull Day", date = LocalDate.of(2025, 4, 15))
 
         //given
-        every { workoutService.getWorkoutById(2) } returns workout
+        every { workoutService.getWorkoutById(2) } returns listOf(workout)
 
         //when
         mockMvc.perform(get("/api/workout/get/byId?id=2"))
@@ -223,7 +223,7 @@ class WorkoutControllerTest(
         val workout = Workout(id = 2, name = "Morning Routine", date = LocalDate.of(2025, 4, 12))
 
         //given
-        every { workoutService.updateWorkoutById(2, "Morning Routine", LocalDate.of(2025, 4, 12)) } returns workout
+        every { workoutService.updateWorkoutById(2, "Morning Routine", LocalDate.of(2025, 4, 12)) } returns listOf(workout)
 
         //when
         mockMvc.perform(put("/api/workout/update?id=2&name=Morning Routine&date=2025-04-12"))
@@ -257,7 +257,7 @@ class WorkoutControllerTest(
         val workout = Workout(id = 2, name = "Morning Routine", date = LocalDate.of(2025, 4, 12))
 
         //given
-        every { workoutService.deleteWorkoutById(2) } returns workout
+        every { workoutService.deleteWorkoutById(2) } returns listOf(workout)
 
         //when
         mockMvc.perform(delete("/api/workout/delete?id=2"))

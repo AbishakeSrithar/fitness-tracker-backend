@@ -23,7 +23,7 @@ class EntryServiceTest {
         val result = entryService.createEntry(1, 2, 60.1, 3, 10);
 
         //then
-        assertEquals(entryPostSave, result)
+        assertEquals(listOf(entryPostSave), result)
     }
 
     @Test
@@ -56,7 +56,7 @@ class EntryServiceTest {
         val result = entryService.getEntryById(2);
 
         //then
-        assertEquals(entry, result)
+        assertEquals(listOf(entry), result)
     }
 
     @Test
@@ -108,7 +108,7 @@ class EntryServiceTest {
         val result = entryService.updateEntryById(2, 75.1, 5, 12);
 
         //then
-        assertEquals(entryPostUpdate, result)
+        assertEquals(listOf(entryPostUpdate), result)
     }
 
     @Test
@@ -125,6 +125,6 @@ class EntryServiceTest {
         val result = entryService.deleteEntryById(2);
 
         //then
-        assertEquals(entry, result)
+        assertEquals(listOf(entry), result)
     }
 }

@@ -27,7 +27,7 @@ class EntryControllerTest(
         val entry = Entry(1, workoutId = 2, exerciseId = 3,  weight = 60.2, sets = 4, reps = 10)
 
         //given
-        every { entryService.createEntry(2, 3, 60.2, 4, 10) } returns entry
+        every { entryService.createEntry(2, 3, 60.2, 4, 10) } returns listOf(entry)
 
         //when
         mockMvc.perform(post("/api/entry/create?workoutId=2&exerciseId=3&weight=60.2&sets=4&reps=10"))
@@ -113,7 +113,7 @@ class EntryControllerTest(
         val entry = Entry(id = 1, workoutId = 1, exerciseId = 1, weight = 60.0, sets = 3, reps = 10)
 
         //given
-        every { entryService.getEntryById(1) } returns entry
+        every { entryService.getEntryById(1) } returns listOf(entry)
 
         //when
         mockMvc.perform(get("/api/entry/get/byId?id=1"))
@@ -246,7 +246,7 @@ class EntryControllerTest(
         val entry = Entry(id = 2, workoutId = 2, exerciseId = 1, weight = 70.0, sets = 5, reps = 12)
 
         //given
-        every { entryService.updateEntryById(2, 70.0, 5, 12) } returns entry
+        every { entryService.updateEntryById(2, 70.0, 5, 12) } returns listOf(entry)
 
         //when
         mockMvc.perform(put("/api/entry/update?id=2&weight=70.0&sets=5&reps=12"))
@@ -282,7 +282,7 @@ class EntryControllerTest(
         val entry = Entry(id = 2, workoutId = 2, exerciseId = 1, weight = 70.0, sets = 5, reps = 12)
 
         //given
-        every { entryService.deleteEntryById(2) } returns entry
+        every { entryService.deleteEntryById(2) } returns listOf(entry)
 
         //when
         mockMvc.perform(delete("/api/entry/delete?id=2"))

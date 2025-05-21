@@ -10,13 +10,11 @@ class WorkoutService(
     private val workoutRepository: WorkoutRepository
 ) {
 
-    private val className = WorkoutService::class
-
     // CREATE
-    fun createWorkout(name: String, date: LocalDate = LocalDate.now()): Workout {
-        return workoutRepository.saveAndFlush(
+    fun createWorkout(name: String, date: LocalDate = LocalDate.now()): List<Workout> {
+        return listOf(workoutRepository.saveAndFlush(
             Workout(null, name, date)
-        )
+        ))
     }
 
     // READ
@@ -24,11 +22,11 @@ class WorkoutService(
         return workoutRepository.findAll()
     }
 
-    fun getWorkoutById(id: Long): Workout {
-        if (workoutRepository.findById(id).isPresent) {
-            return workoutRepository.findById(id).get()
+    fun getWorkoutById(id: Long): List<Workout> {
+        return if (workoutRepository.findById(id).isPresent) {
+            listOf(workoutRepository.findById(id).get())
         } else {
-            throw Exception("Workout Id = $id not found for getWorkoutById() >> $className")
+            listOf()
         }
     }
 
@@ -41,27 +39,22 @@ class WorkoutService(
     }
 
     //  UPDATE
-    fun updateWorkoutById(id: Long, name: String, date: LocalDate): Workout {
-        try {
-            val workout = getWorkoutById(id)
-            workout.name = name
-            workout.date = date
+    fun updateWorkoutById(id: Long, name: String, date: LocalDate): List<Workout> {
+        val workoutInList = getWorkoutById(id)
+        val workout = workoutInList.first()
+        workout.name = name
+        workout.date = date
 
-            workoutRepository.saveAndFlush(workout)
-            return workout
-        } catch (e: Exception) {
-            throw Exception("Exception in updateWorkoutById() >> $className \n $e", e)
-        }
+        val saved = workoutRepository.saveAndFlush(workout)
+        return listOf(saved)
     }
 
     // DELETE
-    fun deleteWorkoutById(id: Long): Workout {
+    fun deleteWorkoutById(id: Long): List<Workout> {
         val workout = getWorkoutById(id)
-        try {
+        if (workout.isNotEmpty()) {
             workoutRepository.deleteById(id)
-            return workout
-        } catch (e: Exception) {
-            throw Exception("Exception in deleteWorkoutById() >> $className", e)
         }
+        return workout
     }
 }

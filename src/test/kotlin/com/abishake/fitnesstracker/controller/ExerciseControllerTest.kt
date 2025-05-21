@@ -27,7 +27,7 @@ class ExerciseControllerTest(
         val exercise = Exercise(1, name = "Deadlift", description = "Die by lifting")
 
         //given
-        every { exerciseService.createExercise("Deadlift", "Die by lifting") } returns exercise
+        every { exerciseService.createExercise("Deadlift", "Die by lifting") } returns listOf(exercise)
 
         //when
         mockMvc.perform(post("/api/exercise/create?name=Deadlift&description=Die by lifting"))
@@ -109,11 +109,11 @@ class ExerciseControllerTest(
     @Test
     fun `Get Exercise by Id`() {
         //setup
-        val exercise = Exercise(
+        val exercise = listOf(Exercise(
             id = 2,
             name = "Bench Press",
             description = "A chest exercise that targets the pectorals, shoulders, and triceps."
-        )
+        ))
 
         //given
         every { exerciseService.getExerciseById(2) } returns exercise
@@ -185,11 +185,11 @@ class ExerciseControllerTest(
     @Test
     fun `Update Exercise By Id Controller`() {
         //setup
-        val exercise = Exercise(
+        val exercise = listOf(Exercise(
             id = 2,
             name = "Push Up +",
             description = "Push up with serratus anterior activation"
-        )
+        ))
 
         //given
         every { exerciseService.updateExerciseById(2, "Push Up +", "Push up with serratus anterior activation") } returns exercise
@@ -223,11 +223,11 @@ class ExerciseControllerTest(
     @Test
     fun `Delete Exercise By Id Controller`() {
         //setup
-        val exercise = Exercise(
+        val exercise = listOf(Exercise(
             id = 2,
             name = "Push Up +",
             description = "Push up with serratus anterior activation"
-        )
+        ))
 
         //given
         every { exerciseService.deleteExerciseById(2) } returns exercise

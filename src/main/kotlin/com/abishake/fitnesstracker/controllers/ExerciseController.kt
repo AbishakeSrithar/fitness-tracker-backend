@@ -26,7 +26,7 @@ class ExerciseController(
     ): RestResponse<List<Exercise>> {
         try {
             val payload = exerciseService.createExercise(name, description)
-            return RestResponse(true, "Create Exercise", listOf(payload))
+            return RestResponse(true, "Create Exercise", payload)
         } catch (e: Exception) {
             throw Exception("Exception in createExercise() >> $className", e)
         }
@@ -53,7 +53,7 @@ class ExerciseController(
     fun getExerciseById(@RequestParam("id") id: Long): RestResponse<List<Exercise>> {
         try {
             val payload = exerciseService.getExerciseById(id)
-            return RestResponse(true, "Get Exercise by Id", listOf(payload))
+            return RestResponse(true, "Get Exercise by Id", payload)
         } catch (e: Exception) {
             throw Exception("Exception in getExerciseById() >> $className", e)
         }
@@ -84,9 +84,11 @@ class ExerciseController(
     ): RestResponse<List<Exercise>> {
         try {
             val payload = exerciseService.updateExerciseById(id, name, description)
-            return RestResponse(true, "Update Exercise by Id", listOf(payload))
+            return RestResponse(true, "Update Exercise by Id", payload)
+        } catch (e: NoSuchElementException) {
+            return RestResponse(false, "Error in Update Exercise by Id: Exercise Id not found", listOf())
         } catch (e: Exception) {
-            return RestResponse(false, "Error in Update Exercise by Id: $e", listOf())
+            throw Exception("Exception in deleteExerciseById() >> $className", e)
         }
     }
 
@@ -100,11 +102,15 @@ class ExerciseController(
     ): RestResponse<List<Exercise>> {
         try {
             val payload = exerciseService.deleteExerciseById(id)
-            return RestResponse(true, "Delete Exercise by Id", listOf(payload))
+            return if (payload.isNotEmpty()) {
+                RestResponse(true, "Delete Exercise by Id", payload)
+            } else {
+                RestResponse(false, "Error in Delete Exercise by Id: Exercise Id not found", listOf())
+            }
         } catch (e: DataIntegrityViolationException) {
             return RestResponse(
                 false,
-                "Error in Delete Workout by Id: DataIntegrityViolationException.\n WorkoutId being used in a current Entry, cannot delete.",
+                "Error in Delete Exercise by Id: DataIntegrityViolationException.\n ExerciseId being used in a current Entry, cannot delete.",
                 listOf()
             )
         } catch (e: Exception) {
