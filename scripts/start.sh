@@ -18,5 +18,5 @@ cd ..
 echo "mvn clean install"
 mvn clean install
 
-echo "docker compose up"
+echo "docker compose up --build"
 docker compose up --build
