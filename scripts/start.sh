@@ -13,6 +13,9 @@ for name in "${containers_to_check[@]}"; do
   done
 done
 
+echo "docker volume prune -f"
+docker volume prune -f
+
 cd ..
 
 echo "mvn clean install"
