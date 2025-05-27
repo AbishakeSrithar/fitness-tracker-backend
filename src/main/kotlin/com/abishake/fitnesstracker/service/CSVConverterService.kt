@@ -15,8 +15,6 @@ class CSVConverterService (
     val createdExerciseNames = mutableMapOf<String, Long>()
 
     fun readCSV() {
-        var i = 0
-
         val inputStream = this::class.java.classLoader.getResourceAsStream("strongData.csv")
             ?: throw IllegalArgumentException("File not found: strongData.csv")
 
