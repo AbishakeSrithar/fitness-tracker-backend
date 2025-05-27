@@ -58,3 +58,5 @@ The idea of this project was to make something from scratch that connects a Fron
   - PostgreSQL
   - Docker
   - Shell Scripts
+
+I chose a Fitness Tracker because my current app charges money to Graph my lifts and I thought it would be fun to try do that myself
