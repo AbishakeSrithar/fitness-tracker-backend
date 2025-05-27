@@ -14,9 +14,33 @@ mvn test
 ## Database Design
 ![database_design.png](database_design.png)
 
-## Endpoints for MVP
-FindById will error if not found, FindBy anything else will return empty list
+## Endpoints Available
+- [x] CREATE
+    - [x] Post Workout
+    - [x] Post Entry
+    - [x] Post Exercise
+- [x] READ
+    - [x] Workouts
+        - [x] Get All
+        - [x] Get By Id
+        - [x] Get By Name
+        - [x] Get By Date
+    - [x] Entry
+        - [x] Get All
+        - [x] Get By Id
+        - [x] Get By WorkoutId
+        - [x] Get By ExerciseId
+    - [x] Exercise
+        - [x] Get All
+        - [x] Get By Id
+        - [x] Get By Name
+- [x] UPDATE
+    - [x] Put Entry
+    - [x] Put Workout
+    - [x] Put
+- [x] DELETE
+    - [x] Delete Entry
+    - [x] Delete Workout
+    - [x] Delete Exercise
+- [x] Import CSV
 
-## Resources
-Test Containers: https://jskim1991.medium.com/spring-boot-configure-testcontainers-in-your-test-code-this-way-417b221e55b
-LocalDate REST Params: https://www.baeldung.com/spring-date-parameters
