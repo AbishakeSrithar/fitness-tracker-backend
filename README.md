@@ -44,3 +44,17 @@ mvn test
     - [x] Delete Exercise
 - [x] Import CSV
 
+The idea of this project was to make something from scratch that connects a Frontend to a Backend without following a tutorial/guide using:
+- Frontend
+  - Typescript
+  - HTML
+  - CSS
+  - Chartjs (Learn how to use a new Library from scratch with Docs)
+
+- Backend
+  - Kotlin
+  - Springboot
+  - Flyway
+  - PostgreSQL
+  - Docker
+  - Shell Scripts
