@@ -1,4 +1,26 @@
 # **Fitness Tracker Backend**
+![ScreenshotFitnessTracker.png](ScreenshotFitnessTracker.png)
+
+## Motivation
+The idea of this project was to make a basic CRUD Application from scratch that connects Frontend/Backend using some of the tools I wanted to learn more about:
+- Frontend
+    - Typescript
+    - HTML
+    - CSS
+    - Chartjs
+
+- Backend
+    - Kotlin
+    - Springboot
+    - Flyway
+    - PostgreSQL
+    - Docker
+    - Shell Scripts
+
+I chose a Fitness Tracker because my current app charges money to Graph my lifts and I thought it would be fun to try do that myself. 
+
+The CSV converter part to load sample data is not designed generically and is specifically for my exported data. Assumptions such as 1 workout per day max and workout split names containing chest/push, back/pull, legs/lower are all hardcoded based on my data.
+
 ## Start Up
 Run the start.sh file in ./scripts
 ``` shell
@@ -42,21 +64,4 @@ mvn test
     - [x] Delete Entry
     - [x] Delete Workout
     - [x] Delete Exercise
-- [x] Import CSV
-
-The idea of this project was to make something from scratch that connects a Frontend to a Backend without following a tutorial/guide using:
-- Frontend
-  - Typescript
-  - HTML
-  - CSS
-  - Chartjs (Learn how to use a new Library from scratch with Docs)
-
-- Backend
-  - Kotlin
-  - Springboot
-  - Flyway
-  - PostgreSQL
-  - Docker
-  - Shell Scripts
-
-I chose a Fitness Tracker because my current app charges money to Graph my lifts and I thought it would be fun to try do that myself
+- [x] Import my CSV

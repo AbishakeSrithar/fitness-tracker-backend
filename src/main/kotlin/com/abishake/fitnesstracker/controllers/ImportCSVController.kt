@@ -1,9 +1,7 @@
 package com.abishake.fitnesstracker.controllers
 
-import com.abishake.fitnesstracker.models.Entry
 import com.abishake.fitnesstracker.models.RestResponse
-import com.abishake.fitnesstracker.service.CSVConverterService
-import org.springframework.dao.DataIntegrityViolationException
+import com.abishake.fitnesstracker.service.ImportCSVService
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -12,8 +10,8 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/import")
 @CrossOrigin
-class importCSVController (
-    private val csvConverterService: CSVConverterService
+class ImportCSVController (
+    private val csvConverterService: ImportCSVService
 ) {
 
     private val className = EntryController::class

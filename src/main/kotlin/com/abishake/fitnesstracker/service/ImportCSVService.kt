@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service
 import java.time.LocalDate
 
 @Service
-class CSVConverterService (
+class ImportCSVService (
     private val workoutService: WorkoutService,
     private val exerciseService: ExerciseService,
     private val entryService: EntryService
