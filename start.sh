@@ -19,10 +19,16 @@ echo "Executing Start Script"
 #echo "docker volume prune -f"
 #docker volume prune -f
 
-cd ..
+# ------ Moving to DockerFile
+#echo "mvn clean install"
+#mvn clean install
 
-echo "mvn clean install"
-mvn clean install
+#echo "docker volume prune -f"
+#docker volume prune -f
+
+# bring down if up and also remove associated volumes (prevent db data from staying - flyways complaints when .sql changes)
+echo "docker compose down -v"
+docker docker compose down -v
 
 echo "docker compose up --build"
 docker compose up --build
