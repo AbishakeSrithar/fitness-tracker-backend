@@ -19,7 +19,9 @@ class WorkoutServiceTest {
         val date = LocalDate.of(2025, 4, 14)
         val workoutPreSave = Workout(id = null, name = "Pull Day", date = date)
         val workoutPostSave = Workout(id = 2, name = "Pull Day", date = date)
+
         //given
+        every { workoutsRepository.findByNameAndDate(name = "Pull Day", date = date) } returns listOf();
         every { workoutsRepository.saveAndFlush(workoutPreSave) } returns workoutPostSave
 
         //when

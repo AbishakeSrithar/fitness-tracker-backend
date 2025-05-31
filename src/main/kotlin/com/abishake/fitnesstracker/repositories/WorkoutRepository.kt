@@ -9,4 +9,5 @@ import java.time.LocalDate
 interface WorkoutRepository : JpaRepository<Workout, Long> {
     fun findByName(name: String): List<Workout>
     fun findByDate(date: LocalDate): List<Workout>
+    fun findByNameAndDate(name: String, date: LocalDate): List<Workout>
 }

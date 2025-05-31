@@ -1,5 +1,6 @@
 package com.abishake.fitnesstracker.service
 
+import com.abishake.fitnesstracker.models.Exercise
 import com.abishake.fitnesstracker.models.Workout
 import com.abishake.fitnesstracker.repositories.WorkoutRepository
 import org.springframework.stereotype.Service
@@ -12,9 +13,15 @@ class WorkoutService(
 
     // CREATE
     fun createWorkout(name: String, date: LocalDate = LocalDate.now()): List<Workout> {
-        return listOf(workoutRepository.saveAndFlush(
-            Workout(null, name, date)
-        ))
+        val existingWorkout = workoutRepository.findByNameAndDate(name, date)
+        return if (existingWorkout.isEmpty()) {
+            val saved = workoutRepository.saveAndFlush(
+                Workout(null, name, date)
+            )
+            return listOf(saved)
+        } else {
+            listOf(existingWorkout.first())
+        }
     }
 
     // READ

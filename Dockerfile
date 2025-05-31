@@ -1,25 +1,19 @@
 # Build
 # Use OpenJDK 21 as the base image
-FROM maven:3.9.9-amazoncorretto-21-al2023
+FROM maven:3.9.9-amazoncorretto-21-al2023 AS build
 
-COPY pom.xml /
-RUN mvn dependency:go-offline
-RUN mvn verify clean
-## build after dependencies are down so it wont redownload unless the POM changes
-COPY . .
-RUN mvn clean install
+
+ENV HOME=/usr/app
+RUN mkdir -p $HOME
+WORKDIR $HOME
+ADD . $HOME
+RUN chmod +x ./mvnw
+RUN --mount=type=cache,target=/root/.m2 ./mvnw -f $HOME/pom.xml clean package
 
 # Run
 FROM amazoncorretto:21-al2023-jdk
 
-# Set the working directory inside the container
-WORKDIR /app
-
-# Copy the built JAR file from the Maven target directory to the container
-COPY target/*.jar app.jar
-
-# Expose the port your Spring Boot app runs on (default 8080)
+ARG JAR_FILE=/usr/app/target/*.jar
+COPY --from=build $JAR_FILE /app/runner.jar
 EXPOSE 8080
-
-# Command to run the Spring Boot application
-CMD ["java", "-jar", "app.jar"]
+ENTRYPOINT java -jar /app/runner.jar

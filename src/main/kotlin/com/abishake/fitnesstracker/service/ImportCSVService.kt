@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service
 import java.time.LocalDate
 
 @Service
-class CSVConverterService (
+class ImportCSVService (
     private val workoutService: WorkoutService,
     private val exerciseService: ExerciseService,
     private val entryService: EntryService
@@ -36,7 +36,7 @@ class CSVConverterService (
         val workoutName = row["Workout Name"]
         if (date != null  && workoutName != null && date !in createdWorkoutDates.keys) {
             val payload = workoutService.createWorkout(workoutName, LocalDate.parse(date))
-            payload[0].id?.let { createdWorkoutDates.put(workoutName, it) }
+            payload[0].id?.let { createdWorkoutDates.put(date, it) }
         }
     }
 
