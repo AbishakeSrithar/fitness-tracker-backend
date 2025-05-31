@@ -2,7 +2,6 @@
 # Use OpenJDK 21 as the base image
 FROM maven:3.9.9-amazoncorretto-21-al2023 AS build
 
-
 ENV HOME=/usr/app
 RUN mkdir -p $HOME
 WORKDIR $HOME
